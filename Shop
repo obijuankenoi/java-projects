@@ -1,13 +1,36 @@
 import java.util.Random;
-public class Shop {
+public class Shop extends Equipment{
+	public Shop(String name, String desc, int value, int dmg) {
+		super(name, desc, value, dmg);
+	}
+	private String pClass="";
+	String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+	String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
+	String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
+	String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
+	String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
+	String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
+	String[] secondary={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
 	public static void main(String[] args, String pClass){
+		int clss=0;
+		
+	}
+	public void shopItems(int clss){
 		Random gen=new Random();
-		String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
-		String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
-		String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
-		String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
-		if(pClass.equals("warrior")){
-			
+		switch(clss){
+		case(1) :{
+			genEquip(mods,swords,potions);
 		}
+		case(2) :{
+			genEquip(mods,bows,potions);
+		}
+		case(3) :{
+			genEquip(mods,wands,potions);
+		}
+	}
+	}
+	public void genEquip(String[] arr1,String[] arr2,String[] arr3){
+		Random gen=new Random();
+		Equipment sword1=new Equipment(arr1, arr2, arr3, gen.nextInt(10), 10);
 	}
 }
