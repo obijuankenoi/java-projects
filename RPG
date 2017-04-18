@@ -1,10 +1,14 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
-public class RPG extends Equipment{
+public class RPG extends Shop{
 	public RPG( String name,String desc, int value, int dmg) {
 		super(name, desc, value, dmg);
 	}
+	private static double pHealth=100.0, eHealth=100.0, bHealth=300.0;
+	private static int eAttack=0;
+	static Random gen=new Random();
+	static String name="", rad="Radulfus: ",eName="", geo="Geofridus";
 	public static void main(String[] args){
 		/*
 		 * BrainStrom:
@@ -12,13 +16,12 @@ public class RPG extends Equipment{
 		 * if no spell book, wand is a melee weapon
 		 * figure out the welcome back text for shop
 		 * function to randomly generate items
+		 * create a range for each modifier
 		 */
 		Scanner scan=new Scanner(System.in);
 		Random gen=new Random();
-		int numResponse=0, pCoins=0, fTime=0;
-		double pHealth=100.0, eHealth=100.0, bHealth=300.0;
+		int numResponse=0, pCoins=0, fTime=0, action=0;
 		boolean inShop=false;
-		String name="", rad="Radulfus: ",eName="", geo="Geofridus", action="";
 		String response="", pClass="";
 	    Equipment rSword=new Equipment("Rusty ShortSword","A rusty Sword",5,10);
 	    Equipment oShortBow=new Equipment("Oak ShortBow","An old oak bow",5,10);
@@ -77,7 +80,7 @@ public class RPG extends Equipment{
 			pClass="warrior";
 			for(int i=0;i<20;i++)
 				System.out.print("-");
-				print("\n**Item recieved: "+wWeap[0].getName()+"**");
+				print("\n**Item recieved: ");
 				pInv.add(wWeap[0]);
 			for(int i=0;i<20;i++)
 				System.out.print("-");
@@ -185,7 +188,20 @@ public class RPG extends Equipment{
 					print("You go into the wild.");
 					eName=enemy[gen.nextInt(enemy.length)];
 					print("You encounter: "+eName);
+					do{
 					print(name+"'s Health: "+pHealth+"\n"+eName+"'s health: "+eHealth);
+					print("Do you Attack, Defend, Open your inventory or Flee?");
+					action=scan.nextInt();
+					fightScene(action);
+					if(pHealth<1){
+						print(name+" died.");
+						break;
+					}
+					else if(eHealth<1){
+						print(eName+" died.");
+						break;
+					}
+					}while(eHealth>0||pHealth>0);
 				}
 				else if(response.equals("2")){
 					if(fTime==0){
@@ -238,24 +254,12 @@ public class RPG extends Equipment{
 							 print("You go into the wild.");
 								eName=enemy[gen.nextInt(enemy.length)];
 								print("You encounter: "+eName);
+								do{
 								print(name+"'s Health: "+pHealth+"\n"+eName+"'s health: "+eHealth);
 								print("Do you Attack, Defend, Use your bag or Flee?");
-								action=scan.next();
-								switch(action){
-								case("Attack") :
-									//Insert dmg
-									print("You deal: ");
-									break;
-								case("Defend") :
-									print("Defend");
-									break;
-								case("Bag") :
-									print("Bag");
-									break;
-								case("Flee") :
-									print("Flee");
-									break;
-								}
+								action=scan.nextInt();
+								fightScene(action);
+								}while(eHealth>0||pHealth>0);
 						 }
 					}
 					else if(fTime>0){
@@ -267,6 +271,37 @@ public class RPG extends Equipment{
 	}
 	public static void print(String output){
 		System.out.println(output);
+	}
+	public static void fightScene(int input){
+		switch(input){
+		case(1) :{
+			print("You deal: 10 Damage!\n");
+			eHealth-=10;
+			if(eHealth>1){
+			eAttack=gen.nextInt(10)+1;
+			print(eName+" deals "+eAttack+" Damage!\n");
+			pHealth-=eAttack;
+			}
+			break;
+		}
+		case(2) :{
+			print("Defend\n");
+			eAttack=gen.nextInt(10)+1;
+			if(eHealth>1){
+			print(eName+" deals "+eAttack+" Damage!\n");
+			pHealth-=eAttack;
+			}
+			break;
+		}
+		case(3) :{
+			print("Bag\n");
+			break;
+		}
+		case(4) :{
+			print("Flee\n");
+			break;
+		}
+		}
 	}
 	
 }
