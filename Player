@@ -6,7 +6,7 @@ public class Player
 	int counter=0;
 	Scanner scan=new Scanner(System.in);
 	public String name, pClass,response;
-    public int health,defense;
+    public static int health=100,defense=0,coins=0;
 	public String[] weapon,secondary,inv;
 	public Equipment invSize[]=new Equipment[30];
 	public Player(String name, String pClass){
@@ -39,7 +39,19 @@ public class Player
 			}
 		}
 	}
-	public static void main(String[] args){
-		
+	public static int getHealth(){
+		return health;
+	}
+	public static void setHealth(int dmg){
+		health-=dmg;
+	}
+	public static int getCoins(){
+		return coins;
+	}
+	public static void addCoins(int amount){
+		coins+=amount;
+	}
+	public static void subCoins(int amount){
+		coins-=amount;
 	}
 }
