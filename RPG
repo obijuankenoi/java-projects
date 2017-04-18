@@ -264,9 +264,6 @@ public class RPG extends Equipment{
 				}
 			}while(response.equals("yes"));
 		}
-		public static void invAdd(Equipment newItem){
-			pInv.add(newItem);
-		}
 	}
 	public static void print(String output){
 		System.out.println(output);
