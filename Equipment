@@ -1,12 +1,13 @@
+package Gamemode;
 
 public class Equipment {
 	private int dmg,value;
 	private String desc;
 	private String[] mod,name,potion;
-	public Equipment(String[] arr1,String[] arr2,String[] arr3,int value,int dmg){
-		this.mod=arr1;
-		this.name=arr2;
-		this.potion=arr3;
+	public Equipment(String[] mod,String[] name,String[] second,String[] potions, int value,int dmg){
+		this.mod=mod;
+		this.name=name;
+		this.potion=potion;
 		this.value=value;
 		this.dmg=dmg;
 	}
