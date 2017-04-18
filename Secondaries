@@ -1,0 +1,9 @@
+package Gamemode;
+
+public class Secondaries extends Equipment {
+
+	public Secondaries(String[] mod, String[] name, String[] second, String[] potion, int value, int amount) {
+		super(null, name, second, null, value, amount);
+	}
+
+}
