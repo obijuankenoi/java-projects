@@ -1,12 +1,10 @@
+package Gamemode;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
-public class RPG extends Shop{
-	public RPG( String name,String desc, int value, int dmg) {
-		super(name, desc, value, dmg);
-	}
+public class RPG {
 	private static double pHealth=100.0, eHealth=100.0, bHealth=300.0;
-	private static int eAttack=0;
+	private static int eAttack=0,pRoll=0,eRoll=0;
 	static Random gen=new Random();
 	static String name="", rad="Radulfus: ",eName="", geo="Geofridus";
 	public static void main(String[] args){
@@ -275,8 +273,10 @@ public class RPG extends Shop{
 	public static void fightScene(int input){
 		switch(input){
 		case(1) :{
+			if(pHealth>1){
 			print("You deal: 10 Damage!\n");
 			eHealth-=10;
+			}
 			if(eHealth>1){
 			eAttack=gen.nextInt(10)+1;
 			print(eName+" deals "+eAttack+" Damage!\n");
@@ -294,11 +294,22 @@ public class RPG extends Shop{
 			break;
 		}
 		case(3) :{
-			print("Bag\n");
+			print("You open your inventory!\n");
 			break;
 		}
 		case(4) :{
-			print("Flee\n");
+			print("You attempt to flee!\n");
+			pRoll=gen.nextInt();
+			eRoll=gen.nextInt();
+			if(pRoll>eRoll){
+				print("You successfully escaped!");
+				break;
+			}
+			else if(pRoll<eRoll){
+				print("You failed to escape!");
+				eAttack=gen.nextInt();
+				pHealth-=eAttack;
+			}
 			break;
 		}
 		}
