@@ -1,16 +1,22 @@
 
-
 public class Equipment {
 	private int dmg,value;
-	private String desc, name;
-	public Equipment(String name,String desc,int value,int dmg){
-		this.name=name;
-		this.desc=desc;
+	private String desc;
+	private String[] mod,name,potion;
+	public Equipment(String[] arr1,String[] arr2,String[] arr3,int value,int dmg){
+		this.mod=arr1;
+		this.name=arr2;
+		this.potion=arr3;
 		this.value=value;
 		this.dmg=dmg;
 	}
-	public String getName(){
+	public Equipment(String name2, String desc2, int value2, int dmg2) {
+	}
+	public String[] getName(){
 		return name;
+	}
+	public String[] getMod(){
+		return mod;
 	}
 	public String getDesc(){
 		return desc;
