@@ -1,0 +1,13 @@
+import java.util.Random;
+public class Shop {
+	public static void main(String[] args, String pClass){
+		Random gen=new Random();
+		String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+		String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
+		String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
+		String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
+		if(pClass.equals("warrior")){
+			
+		}
+	}
+}
