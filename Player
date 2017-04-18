@@ -1,0 +1,15 @@
+
+public class Player
+{
+	int constant=0;
+	public String name, pClass;
+    public int health,defense;
+	public String[] weapon,secondary,inv;
+	public Player(String name, String pClass){
+		this.name=name;
+		this.pClass=pClass;
+	}
+	public static void main(String[] args){
+		
+	}
+}
