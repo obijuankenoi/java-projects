@@ -1,16 +1,21 @@
+package Gamemode;
+
 import java.util.Random;
-public class Shop extends Equipment{
-	public Shop(String name, String desc, int value, int dmg) {
-		super(name, desc, value, dmg);
-	}
+public class Shop  {
+	
 	private String pClass="";
+	//Warrior
 	String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+	String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
+	//Ranger
 	String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
+	String[] quivers={};
+	//Wizard
 	String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
+	String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	//All
 	String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
 	String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
-	String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
-	String[] secondary={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
 	public static void main(String[] args, String pClass){
 		int clss=0;
 		
@@ -19,18 +24,34 @@ public class Shop extends Equipment{
 		Random gen=new Random();
 		switch(clss){
 		case(1) :{
-			genEquip(mods,swords,potions);
+			genEquip(mods,swords,defense,potions);
 		}
 		case(2) :{
-			genEquip(mods,bows,potions);
+			genEquip(mods,bows,quivers,potions);
 		}
 		case(3) :{
-			genEquip(mods,wands,potions);
+			genEquip(mods,wands,spellBooks,potions);
 		}
 	}
 	}
-	public void genEquip(String[] arr1,String[] arr2,String[] arr3){
+	
+	public void genEquip(String[] mods,String[] name,String[] second,String[]potions){
 		Random gen=new Random();
-		Equipment sword1=new Equipment(arr1, arr2, arr3, gen.nextInt(10), 10);
+		int roll=gen.nextInt(10);
+		if(roll<=2){
+			Equipment sword1=new Weapon(mods, name, gen.nextInt(10), 5);
+		}
+		else if(roll>2 && roll<=5){
+			
+		}
+		else if(roll>5 && roll<=8){
+			
+		}
+		else{
+			
+		}
+	}
+	public void shopDisplay(String[]mods,String[]arr,String[] arr1,String[]potions){
+		
 	}
 }
