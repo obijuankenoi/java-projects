@@ -1,0 +1,32 @@
+package Gamemode;
+import java.util.Random;
+public class Enemies {
+	static Random gen=new Random();
+	static int eHealth=100,bHealth=100,eAttack=0;
+	static String eName="";
+	static String[] enemy={"Bandit","Assassin","Trained Assassin"};
+	String[] boss={"Hydra","Dragon","Dwarf King","Basalisk"};
+	
+	public static void encounter(){
+		eName=enemy[gen.nextInt(enemy.length)];
+		System.out.println("You encounter: "+eName);
+		
+	}
+	public static String getName(){
+		return eName;
+	}
+	public static int getHealth(){
+		return eHealth;
+	}
+	public static void setHealth(int dmg){
+		eHealth-=dmg;
+	}
+	public static int Attack(){
+		eAttack=gen.nextInt(10)+1;
+		return eAttack;
+	}
+	public static void main(String[] args) {
+
+	}
+
+}
