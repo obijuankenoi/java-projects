@@ -1,0 +1,13 @@
+package Gamemode;
+
+public class Potion extends Equipment{
+
+	public Potion(String[] mod, String[] name, String[] second, String[] potions, int value, int amount) {
+		super(mod, name, null, potions, value, amount);
+	}
+
+	public static void main(String[] args) {
+
+	}
+
+}
