@@ -1,0 +1,11 @@
+package Gamemode;
+
+public class Weapon extends Equipment{
+
+	public Weapon(String[] mod, String[] name, int value, int dmg) {
+		super(mod, name, null, null, value, dmg);
+	}
+
+
+
+}
