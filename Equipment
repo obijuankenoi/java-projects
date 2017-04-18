@@ -1,0 +1,24 @@
+
+
+public class Equipment {
+	private int dmg,value;
+	private String desc, name;
+	public Equipment(String name,String desc,int value,int dmg){
+		this.name=name;
+		this.desc=desc;
+		this.value=value;
+		this.dmg=dmg;
+	}
+	public String getName(){
+		return name;
+	}
+	public String getDesc(){
+		return desc;
+	}
+	public int getDmg(){
+		return dmg;
+	}
+	public int getValue(){
+		return value;
+	}
+}
