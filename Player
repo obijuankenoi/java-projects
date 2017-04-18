@@ -1,13 +1,43 @@
-
+package Gamemode;
+import java.util.Scanner;
 public class Player
 {
 	int constant=0;
-	public String name, pClass;
+	int counter=0;
+	Scanner scan=new Scanner(System.in);
+	public String name, pClass,response;
     public int health,defense;
 	public String[] weapon,secondary,inv;
+	public Equipment invSize[]=new Equipment[30];
 	public Player(String name, String pClass){
 		this.name=name;
 		this.pClass=pClass;
+		for(counter=0;counter<=invSize.length;counter++){
+			invSize[counter]=null;
+		}
+	}
+	public void pickUp(Equipment equip){
+		for(counter=0;counter<invSize.length;counter++){
+		if(invSize[counter]==null){
+			invSize[counter]=equip;
+			break;
+		}
+		}
+		if(counter==invSize.length){
+			System.out.println("Your inventory is full, would you like to drop an item?");
+			response=scan.next();
+			if(!response.equals("yes")&&!response.equals("no")){
+				System.out.println(response+" is not a valid answer.");
+				System.out.println("Please try again");
+				response=scan.next();
+			}
+			else if(response.equals("yes")){
+				
+			}
+			else if(response.equals("no")){
+				
+			}
+		}
 	}
 	public static void main(String[] args){
 		
