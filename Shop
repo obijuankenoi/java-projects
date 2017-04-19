@@ -6,42 +6,38 @@ public class Shop  {
 	private String pClass="";
 	static Equipment weapon;
 	//Warrior
-	String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
-	String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
+	static String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+	static String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
 	//Ranger
-	String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
-	String[] quivers={};
+	static String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
+	static String[] quivers={};
 	//Wizard
-	String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
-	String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
+	static String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
 	//All
-	String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
-	String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
-	public static void main(String[] args, String pClass){
-		int clss=0;
-		
-	}
-	public void shopItems(int clss){
+	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
+	static String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
+	public static void shopItems(int clss){
 		Random gen=new Random();
 		switch(clss){
 		case(1) :{
-			genEquip(mods,swords,defense,potions);
+			genEquip(mods[1],swords[1],defense[1],potions[1]);
 		}
 		case(2) :{
-			genEquip(mods,bows,quivers,potions);
+			genEquip(mods[1],bows[1],quivers[1],potions[1]);
 		}
 		case(3) :{
-			genEquip(mods,wands,spellBooks,potions);
+			genEquip(mods[1],wands[1],spellBooks[1],potions[1]);
 		}
 	}
 	}
 	
-	public void genEquip(String[] mods,String[] name,String[] second,String[]potions){
+	public static void genEquip(String mods,String name,String second,String potions){
 		Random gen=new Random();
 		int roll=gen.nextInt(10);
 		if(roll<=2){
 			Equipment sword1=new Weapon(mods, name, gen.nextInt(10), 5);
-			Shop.setWeap(sword1);
+			Weapon.setWeap(sword1);
 		}
 		else if(roll>2 && roll<=5){
 			
@@ -53,13 +49,7 @@ public class Shop  {
 			
 		}
 	}
-	public void shopDisplay(String[]mods,String[]arr,String[] arr1,String[]potions){
+	public static void shopDisplay(String mods,String name,String second,String potions){
 		
-	}
-	public static Equipment getWeap(){
-		return weapon;
-	}
-	public static void setWeap(Equipment newWeap){
-		weapon=newWeap;
 	}
 }
