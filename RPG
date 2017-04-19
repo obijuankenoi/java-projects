@@ -14,12 +14,12 @@ public class RPG {
 		 * figure out the welcome back text for shop
 		 * function to randomly generate items
 		 * create a range for each modifier
+		 * make it so both people dont die
 		 */
 		Scanner scan=new Scanner(System.in);
 		Random gen=new Random();
-		int numResponse=0, fTime=0, action=0;
+		int fTime=0, action=0;
 		boolean inShop=false;
-		String pName="",response="", pClass="";
 	    Equipment rSword=new Equipment("Rusty ShortSword","A rusty Sword",5,10);
 	    Equipment oShortBow=new Equipment("Oak ShortBow","An old oak bow",5,10);
 	    Equipment oWand=new Equipment("Oak Wand","A stick",5,10);
@@ -30,279 +30,269 @@ public class RPG {
 		Equipment[] wDef={oldWoodenKiteShield}, hDef={leatherVest}, mDef={introSpellBook};
 		ArrayList<Equipment> shop=new ArrayList<Equipment>();
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
-		print("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice,"
+		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice,"
 				+ " 2 is the second.\n\n\n");
-		print("Welcome stranger what is thy name?");
-		pName=scan.next();
-		pName=pName.substring(0, 1).toUpperCase()+pName.substring(1);
-		Player.setName(pName);
-		print("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
-		response=scan.next();
-		if(!response.equals("yes")&&!response.equals("no")){
-			print(response+" is not a valid answer.");
-			print("Please try again");
-			response=scan.next();
+		println("Welcome stranger what is thy name?");
+		Player.setName(scan.next());
+		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
+		println("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
+		Player.validChk(scan.next());	
+		if(Player.getResponse().equals("yes")){
+			println("\n"+rad+"Very well!\n");
 		}
-		else if(response.equals("yes")){
-			print("\nVery well!\n");
+		else if(Player.getResponse().equals("no")){
+			println("Oh, would you mind telling me thy name again?");
+			Player.setName(scan.next());
+			Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
+			println("Ah yes, "+Player.getName()+", my wee old mind is not how it once was.");
 		}
-		else if(response.equals("no")){
-			print("Oh, would you mind telling me thy name again?");
-			pName=scan.next();
-			pName=pName.substring(0, 1).toUpperCase()+pName.substring(1);
-			print("Ah yes, "+Player.getName()+", my wee old mind is not how it once was.");
-		}
-		if(response.equals("yes")||response.equals("no")){
-		print(rad+"I see ye have no steel.\nCome with me "+Player.getName()+" I have something to show you.\n");
+		if(Player.getResponse().equals("yes")||Player.getResponse().equals("no")){
+		println(rad+"I see ye have no steel.\nCome with me "+Player.getName()+" I have something to show you.\n");
 		for(int i=0;i<20;i++)
-			System.out.print("-");
-			print("\n\n**You enter "+rad.substring(0,8)+"' home.**\n");
+			print("-");
+			println("\n\n**You enter "+rad.substring(0,8)+"' home.**\n");
 		for(int i=0;i<20;i++)
-			System.out.print("-");
-		print("\n\n"+rad+"I have these weapons for ye.");
-		print("Do choose wisely as you cannot change your mind later on.");
+			print("-");
+		println("\n\n"+rad+"I have these weapons for ye.");
+		println("Do choose wisely as you cannot change your mind later on.");
 		for(int i=0;i<20;i++)
-			System.out.print("-");
-			print("\n**"+rad.substring(0,8)+" puts a sword, bow, and a wand on the table in front of you.\nChoose one.**");
+			print("-");
+			println("\n**"+rad.substring(0,8)+" puts a sword, bow, and a wand on the table in front of you.\nChoose one.**");
 		for(int i=0;i<20;i++)
-			System.out.print("-");
-		print("\n");
-		numResponse=scan.nextInt();
-		 if(numResponse<1||numResponse>3){
-			 print(numResponse+" is not a valid answer.");
-			 print("please try again.");
-			 numResponse=scan.nextInt();
+			print("-");
+		println("\n");
+		Player.setNumResponse(scan.nextInt());
+		Player.validNumChk(Player.getNumResponse());
 		 }
-		 if(numResponse==1){
-			pClass="warrior";
+		 if(Player.getNumResponse()==1){
+			Player.setPClass(Player.getNumResponse());
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-				print("\n**Item recieved: "+Player.getWeap());
+				print("-");
+				println("\n**Item recieved: "+Player.getWeap());
 				Player.setWeap(Shop.getWeap());
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-			print("\n\n"+rad+"that "+Player.getWeap()+" was my fathers before he died fighting the dwarf king.\n");
+				print("-");
+			println("\n\n"+rad+"that "+Player.getWeap()+" was my fathers before he died fighting the dwarf king.\n");
 			shop.add(wWeap[0]);
 		}
-		else if(numResponse==2){
-			pClass="hunter";
+		else if(Player.getNumResponse()==2){
+			Player.setPClass(Player.getNumResponse());;
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-				print("\n**Item recieved: "+hWeap[0].getName()+"**");
+				print("-");
+				println("\n**Item recieved: "+hWeap[0].getName()+"**");
 				pInv.add(hWeap[0]);
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-			print("\n\n"+rad+"I would go hunting as a boy with that "+hWeap[0].getName()+".\n");
+				print("-");
+			println("\n\n"+rad+"I would go hunting as a boy with that "+hWeap[0].getName()+".\n");
 			shop.add(hWeap[0]);
 		}
-		else if(numResponse==3){
-			pClass="mage";
+		else if(Player.getNumResponse()==3){
+			Player.setPClass(Player.getNumResponse());
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-				print("\n\n**Item recieved: "+mWeap[0].getName()+"**");
+				print("-");
+				println("\n\n**Item recieved: "+mWeap[0].getName()+"**");
 				pInv.add(mWeap[0]);
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-			print("\n\n"+rad+"I could never figure out how to use that stick.\n");
+				print("-");
+			println("\n\n"+rad+"I could never figure out how to use that stick.\n");
 			shop.add(mWeap[0]);
 		}
 		 for(int i=0;i<20;i++)
-				System.out.print("-");
-				print("\n**Now that "+rad.substring(0, 8)+" gave you a weapon you can leave town or walk around.**");
+				print("-");
+				println("\n**Now that "+rad.substring(0, 8)+" gave you a weapon you can leave town or walk around.**");
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-			print("\n");
-			response=scan.next();
-			if(response.equals("2")){
+				print("-");
+			println("\n");
+			Player.setResponse(scan.next());
+			if(Player.getResponse().equals("2")){
 				for(int i=0;i<20;i++)
-					System.out.print("-");
-					print("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is "
+					print("-");
+					println("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is "
 							+ "setting.\nYou can only choose to go in one house, do you go in the left or right one?**");
 				for(int i=0;i<20;i++)
-					System.out.print("-");
-				print("\n");
-				response=scan.next();
-				if(response.equals("1")){
-					print("You go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
+					print("-");
+				println("\n");
+				Player.setResponse(scan.next());
+				if(Player.getResponse().equals("1")){
+					println("You go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
 							+ " on a table.\nDo you take it or leave?");
-					response=scan.next();
-					if(response.equals("1")){
-						if(pClass.equals("warrior")){
-							print("You pick up the item, inside is an old wooden kite shield.\n");
+					Player.setResponse(scan.next());
+					if(Player.getResponse().equals("1")){
+						if(Player.getPClass()==1){
+							println("You pick up the item, inside is an old wooden kite shield.\n");
 							for(int i=0;i<20;i++)
-								System.out.print("-");
-								print("\n**Item recieved: "+wDef[0].getName()+".**");
+								print("-");
+								println("\n**Item recieved: "+wDef[0].getName()+".**");
 							shop.add(wDef[0]);
 						}
-						else if(pClass.equals("hunter")){
-							print("You pick up the item, inside is a leather vest.");
+						else if(Player.getPClass()==2){
+							println("You pick up the item, inside is a leather vest.");
 							for(int i=0;i<20;i++)
-								System.out.print("-");
-								print("\n**Item recieved: "+hDef[0].getName()+".**");
+								print("-");
+								println("\n**Item recieved: "+hDef[0].getName()+".**");
 							for(int i=0;i<20;i++)
-								System.out.print("-");
-							print("\n");
+								print("-");
+							println("\n");
 							shop.add(hDef[0]);
 						}
-						else if(pClass.equals("mage")){
-							print("You pick up the item, inside is an intro spell book.");
+						else if(Player.getPClass()==3){
+							println("You pick up the item, inside is an intro spell book.");
 							for(int i=0;i<20;i++)
-								System.out.print("-");
-								print("\n**Item recieved: "+mDef[0].getName()+".**");
+								print("-");
+								println("\n**Item recieved: "+mDef[0].getName()+".**");
 							for(int i=0;i<20;i++)
-								System.out.print("-");
-							print("\n");
+								print("-");
+							println("\n");
 							shop.add(mDef[0]);
 						}
 					}
 				}
-				else if(response.equals("2")){
-					print("You go into the right house.\nInside is an old man, he does nothing but point at a pouch on a table.");
-					print("Do you grab the pouch or leave?");
-					response=scan.next();
-					if(response.equals("1")){
-						print("You pick up the pouch.\nInside there are some coins.");
+				else if(Player.getResponse().equals("2")){
+					println("You go into the right house.\nInside is an old man, he does nothing but point at a pouch on a table.");
+					println("Do you grab the pouch or leave?");
+					Player.setResponse(scan.next());
+					if(Player.getResponse().equals("1")){
+						println("You pick up the pouch.\nInside there are some coins.");
 						Player.addCoins(50);;
 						for(int i=0;i<20;i++)
-							System.out.print("-");
-							print("\n**Item recieved: 50 Coins.**");
+							print("-");
+							println("\n**Item recieved: 50 Coins.**");
 						for(int i=0;i<20;i++)
-							System.out.print("-");
-						print("You thank him and exit the house.");
+							print("-");
+						println("You thank him and exit the house.");
 					}
 				}
 			}
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-				print("\n**From here use numbers to navigate the menu.**");
+				print("-");
+				println("\n**From here use numbers to navigate the menu.**");
 			for(int i=0;i<20;i++)
-				System.out.print("-");
-			print("\n");
+				print("-");
+			println("\n");
 			do{
-				print("\nDo you want to go into the wild, visit the shop?");
-				response=scan.next();
-				if(response.equals("1")){
-					print("You go into the wild.");
+				println("\nDo you want to go into the wild, visit the shop?");
+				Player.setResponse(scan.next());
+				if(Player.getResponse().equals("1")){
+					println("You go into the wild.");
 					Enemies.encounter();
 					do{
-					print(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
-					print("Do you Attack, Defend, Open your inventory or Flee?");
+					println(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+					println("Do you Attack, Defend, Open your inventory or Flee?");
 					action=scan.nextInt();
 					fightScene(action);
 					if(Player.getHealth()<1){
-						print(Player.getName()+" died.");
+						println(Player.getName()+" died.");
 						break;
 					}
 					else if(Enemies.getHealth()<1){
-						print(Enemies.getHealth()+" died.");
+						println(Enemies.getName()+" died.");
 						break;
 					}
 					}while(Enemies.getHealth()>0||Player.getHealth()>0);
 				}
-				else if(response.equals("2")){
+				else if(Player.getResponse().equals("2")){
 					if(fTime==0){
 						inShop=true;
-						print("I see this is your first time at my shop.\nThe names "+geo+".");
+						println("I see this is your first time at my shop.\nThe names "+geo+".");
 						do{
-							print("What can I do ya for?\nBuying=1, Selling=2");
-							numResponse=scan.nextInt();
-							 if(numResponse<1||numResponse>3){
-								 print(numResponse+" is not a valid answer.");
-								 print("please try again.");
-								 numResponse=scan.nextInt();
-							 }
-							 if(numResponse==1){
-								 print("Heres what I've got.");
+							println("What can I do ya for?\nBuying=1, Selling=2");
+							Player.setNumResponse(scan.nextInt());
+							Player.validNumChk(Player.getNumResponse());
+							 if(Player.getNumResponse()==1){
+								 println("Heres what I've got.");
 								 for(int i=0;i<shop.size();i++){
-									 print(i+". "+shop.get(i).getName());
-									 print("What would you like to buy?");
-									 numResponse=scan.nextInt();
-									 print(shop.get(numResponse).getName()+" costs "+shop.get(numResponse).getValue()+
+									 println(i+". "+shop.get(i).getName());
+									 println("What would you like to buy?");
+									 Player.setNumResponse(scan.nextInt());
+									 println(shop.get(Player.getNumResponse()).getName()+" costs "+shop.get(Player.getNumResponse()).getValue()+
 											 " Coins.\nYou have "+Player.getCoins()+" Coins." );
-									 if(shop.get(numResponse).getValue()>Player.getCoins()){
-										 print("You dont have enough coins.");
-										 print("Would you like to buy something else or leave?");
-										 numResponse=scan.nextInt();
-										 if(numResponse==2){
+									 if(shop.get(Player.getNumResponse()).getValue()>Player.getCoins()){
+										 println("You dont have enough coins.");
+										 println("Would you like to buy something else or leave?");
+										 Player.setNumResponse(scan.nextInt());
+										 if(Player.getNumResponse()==2){
 											 inShop=false;
 											 break;
 										 }
 									 }
 									 else{
-										 print("Purchased: "+shop.get(numResponse).getName());
-										 pInv.add(shop.get(numResponse));
+										 println("Purchased: "+shop.get(Player.getNumResponse()).getName());
+										 pInv.add(shop.get(Player.getNumResponse()));
 										 for(int f=0;i<pInv.size();f++){
 											 pInv.get(f);
 										 }
 									 }
 								 }
 							 }
-							 else if(numResponse==2){
-								 print("Lets see what you've got");
+							 else if(Player.getNumResponse()==2){
+								 println("Lets see what you've got");
 								 for(int i=0;i<pInv.size();i++){
-									 print(i+". "+pInv.get(i));
-									 print("What would you like to sell?");
-									 numResponse=scan.nextInt();
+									 println(i+". "+pInv.get(i));
+									 println("What would you like to sell?");
+									 Player.setNumResponse(scan.nextInt());
 								 }
 							 }
-						}while(numResponse==1);
-						if(numResponse==2 && inShop==false){
-							 print("You go into the wild.");
+						}while(Player.getNumResponse()==1);
+						if(Player.getNumResponse()==2 && inShop==false){
+							 println("You go into the wild.");
 								Enemies.encounter();
 								do{
-								print(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
-								print("Do you Attack, Defend, Use your bag or Flee?");
+								println(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+								println("Do you Attack, Defend, Use your bag or Flee?");
 								action=scan.nextInt();
 								fightScene(action);
 								}while(Enemies.getHealth()>0||Enemies.getHealth()>0);
 						 }
 					}
 					else if(fTime>0){
-						print("Welcome back "+Player.getName()+".\nWhat can I do ya for?");
+						println("Welcome back "+Player.getName()+".\nWhat can I do ya for?");
 					}
 				}
-			}while(response.equals("yes"));
+			}while(Player.getResponse().equals("yes"));
 		}
+	
+	public static void println(String output){
+		System.out.println(output);
 	}
 	public static void print(String output){
-		System.out.println(output);
+		System.out.print(output);
 	}
 	
 	public static void fightScene(int input){
 		switch(input){
 		case(1) :{
 			if(Player.getHealth()>1){
-			print("You deal: 10 Damage!\n");
+			println("You deal: 10 Damage!\n");
 			Enemies.setHealth(10);
 			}
 			if(Enemies.getHealth()>1){
-			print(Enemies.getName()+" deals "+Enemies.Attack()+" Damage!\n");
+			println(Enemies.getName()+" deals "+Enemies.Attack()+" Damage!\n");
 			Player.setHealth(Enemies.Attack());
 			}
 			break;
 		}
 		case(2) :{
-			print("Defend\n");
+			println("Defend\n");
 			if(Enemies.getHealth()>1){
-			print(Enemies.getName()+" deals "+Enemies.Attack()+" Damage!\n");
+			println(Enemies.getName()+" deals "+Enemies.Attack()+" Damage!\n");
 			Player.setHealth(Enemies.Attack());
 			}
 			break;
 		}
 		case(3) :{
-			print("You open your inventory!\n");
+			println("You open your inventory!\n");
 			break;
 		}
 		case(4) :{
-			print("You attempt to flee!\n");
+			println("You attempt to flee!\n");
 			pRoll=gen.nextInt();
 			eRoll=gen.nextInt();
 			if(pRoll>eRoll){
-				print("You successfully escaped!");
+				println("You successfully escaped!");
 				break;
 			}
 			else if(pRoll<eRoll){
-				print("You failed to escape!");
+				println("You failed to escape!");
 				Player.setHealth(Enemies.Attack());
 			}
 			break;
