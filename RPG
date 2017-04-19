@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RPG {
 	private static int pRoll=0,eRoll=0;
 	static Random gen=new Random();
-	static String name="", rad="Radulfus: ", geo="Geofridus";
+	static String rad="Radulfus: ", geo="Geofridus";
 	public static void main(String[] args){
 		/*
 		 * BrainStrom:
@@ -19,7 +19,7 @@ public class RPG {
 		Random gen=new Random();
 		int numResponse=0, fTime=0, action=0;
 		boolean inShop=false;
-		String response="", pClass="";
+		String pName="",response="", pClass="";
 	    Equipment rSword=new Equipment("Rusty ShortSword","A rusty Sword",5,10);
 	    Equipment oShortBow=new Equipment("Oak ShortBow","An old oak bow",5,10);
 	    Equipment oWand=new Equipment("Oak Wand","A stick",5,10);
@@ -33,9 +33,10 @@ public class RPG {
 		print("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice,"
 				+ " 2 is the second.\n\n\n");
 		print("Welcome stranger what is thy name?");
-		name=scan.next();
-		name=name.substring(0, 1).toUpperCase()+name.substring(1);
-		print("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+name+", is that right?");
+		pName=scan.next();
+		pName=pName.substring(0, 1).toUpperCase()+pName.substring(1);
+		Player.setName(pName);
+		print("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
 		response=scan.next();
 		if(!response.equals("yes")&&!response.equals("no")){
 			print(response+" is not a valid answer.");
@@ -47,12 +48,12 @@ public class RPG {
 		}
 		else if(response.equals("no")){
 			print("Oh, would you mind telling me thy name again?");
-			name=scan.next();
-			name=name.substring(0, 1).toUpperCase()+name.substring(1);
-			print("Ah yes, "+name+", my wee old mind is not how it once was.");
+			pName=scan.next();
+			pName=pName.substring(0, 1).toUpperCase()+pName.substring(1);
+			print("Ah yes, "+Player.getName()+", my wee old mind is not how it once was.");
 		}
 		if(response.equals("yes")||response.equals("no")){
-		print(rad+"I see ye have no steel.\nCome with me "+name+" I have something to show you.\n");
+		print(rad+"I see ye have no steel.\nCome with me "+Player.getName()+" I have something to show you.\n");
 		for(int i=0;i<20;i++)
 			System.out.print("-");
 			print("\n\n**You enter "+rad.substring(0,8)+"' home.**\n");
@@ -76,11 +77,11 @@ public class RPG {
 			pClass="warrior";
 			for(int i=0;i<20;i++)
 				System.out.print("-");
-				print("\n**Item recieved: ");
-				pInv.add(wWeap[0]);
+				print("\n**Item recieved: "+Player.getWeap());
+				Player.setWeap(Shop.getWeap());
 			for(int i=0;i<20;i++)
 				System.out.print("-");
-			print("\n\n"+rad+"that "+wWeap[0].getName()+" was my fathers before he died fighting the dwarf king.\n");
+			print("\n\n"+rad+"that "+Player.getWeap()+" was my fathers before he died fighting the dwarf king.\n");
 			shop.add(wWeap[0]);
 		}
 		else if(numResponse==2){
@@ -184,12 +185,12 @@ public class RPG {
 					print("You go into the wild.");
 					Enemies.encounter();
 					do{
-					print(name+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+					print(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
 					print("Do you Attack, Defend, Open your inventory or Flee?");
 					action=scan.nextInt();
 					fightScene(action);
 					if(Player.getHealth()<1){
-						print(name+" died.");
+						print(Player.getName()+" died.");
 						break;
 					}
 					else if(Enemies.getHealth()<1){
@@ -249,7 +250,7 @@ public class RPG {
 							 print("You go into the wild.");
 								Enemies.encounter();
 								do{
-								print(name+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+								print(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
 								print("Do you Attack, Defend, Use your bag or Flee?");
 								action=scan.nextInt();
 								fightScene(action);
@@ -257,7 +258,7 @@ public class RPG {
 						 }
 					}
 					else if(fTime>0){
-						print("Welcome back "+name+".\nWhat can I do ya for?");
+						print("Welcome back "+Player.getName()+".\nWhat can I do ya for?");
 					}
 				}
 			}while(response.equals("yes"));
