@@ -3,8 +3,8 @@ package Gamemode;
 public class Equipment {
 	private int dmg,value;
 	private String desc;
-	private String[] mod,name,potion;
-	public Equipment(String[] mod,String[] name,String[] second,String[] potions, int value,int dmg){
+	private String mod,name,potion;
+	public Equipment(String mod,String name,String second,String potions, int value,int dmg){
 		this.mod=mod;
 		this.name=name;
 		this.potion=potion;
@@ -13,10 +13,10 @@ public class Equipment {
 	}
 	public Equipment(String name2, String desc2, int value2, int dmg2) {
 	}
-	public String[] getName(){
+	public String getName(){
 		return name;
 	}
-	public String[] getMod(){
+	public String getMod(){
 		return mod;
 	}
 	public String getDesc(){
