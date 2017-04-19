@@ -3,17 +3,15 @@ import java.util.Scanner;
 public class Player
 {
 	int constant=0;
-	static int counter=0;
+	static int counter=0,numResponse,pClass;
 	static Scanner scan=new Scanner(System.in);
-	public static String name;
-	public String pClass;
-	public static String response;
+	public static String name,response,result,death;
     public static int health=100,defense=0,coins=0;
 	public static Equipment weapon;
 	public Equipment[] secondary;
 	public Equipment[] inv;
 	public static Equipment invSize[]=new Equipment[30];
-	public Player(String name, String pClass){
+	public Player(String name, int pClass){
 		this.name=name;
 		this.pClass=pClass;
 		for(counter=0;counter<=invSize.length;counter++){
@@ -70,7 +68,42 @@ public class Player
 	public static void setWeap(Equipment equipment){
 		weapon=equipment;
 	}
-	public static void Attack(){
-		
+	public static void validNumChk(int newNumResponse){
+		do{
+		numResponse=newNumResponse;
+		if(numResponse<1||numResponse>3){
+		System.out.println(numResponse+" is not a valid answer.");
+		System.out.println("please try again.");
+		numResponse=scan.nextInt();
+		}
+		}while(numResponse<1||numResponse>3);
+	}
+	public static void validChk(String newResponse){
+		do{
+		response=newResponse;
+		if(!response.equals("yes")&&!response.equals("no")){
+			System.out.println(response+" is not a valid answer.");
+			System.out.println("Please try again");
+			response=scan.next();
+		}
+		}while(!response.equals("yes")&&!response.equals("no"));
+	}
+	public static String getResponse(){
+		return response;
+	}
+	public static void setResponse(String newResponse){
+		response=newResponse;
+	}
+	public static int getNumResponse(){
+		return numResponse;
+	}
+	public static void setNumResponse(int newNum){
+		numResponse=newNum;
+	}
+	public static int getPClass(){
+		return pClass;
+	}
+	public static void setPClass(int newClass){
+		pClass=newClass;
 	}
 }
