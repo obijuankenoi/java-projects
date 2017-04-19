@@ -3,7 +3,7 @@ import java.util.Random;
 public class Enemies {
 	static Random gen=new Random();
 	static int eHealth=100,bHealth=100,eAttack=0;
-	static String eName="";
+	static String eName="",death;
 	static String[] enemy={"Bandit","Assassin","Trained Assassin"};
 	String[] boss={"Hydra","Dragon","Dwarf King","Basalisk"};
 	
@@ -25,8 +25,4 @@ public class Enemies {
 		eAttack=gen.nextInt(10)+1;
 		return eAttack;
 	}
-	public static void main(String[] args) {
-
-	}
-
 }
