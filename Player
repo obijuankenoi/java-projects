@@ -3,12 +3,16 @@ import java.util.Scanner;
 public class Player
 {
 	int constant=0;
-	int counter=0;
-	Scanner scan=new Scanner(System.in);
-	public String name, pClass,response;
+	static int counter=0;
+	static Scanner scan=new Scanner(System.in);
+	public static String name;
+	public String pClass;
+	public static String response;
     public static int health=100,defense=0,coins=0;
-	public String[] weapon,secondary,inv;
-	public Equipment invSize[]=new Equipment[30];
+	public static Equipment weapon;
+	public Equipment[] secondary;
+	public Equipment[] inv;
+	public static Equipment invSize[]=new Equipment[30];
 	public Player(String name, String pClass){
 		this.name=name;
 		this.pClass=pClass;
@@ -16,7 +20,7 @@ public class Player
 			invSize[counter]=null;
 		}
 	}
-	public void pickUp(Equipment equip){
+	public static void pickUp(Equipment equip){
 		for(counter=0;counter<invSize.length;counter++){
 		if(invSize[counter]==null){
 			invSize[counter]=equip;
@@ -53,5 +57,20 @@ public class Player
 	}
 	public static void subCoins(int amount){
 		coins-=amount;
+	}
+	public static String getName(){
+		return name;
+	}
+	public static void setName(String newName){
+		name=newName;
+	}
+	public static Equipment getWeap(){
+		return weapon;
+	}
+	public static void setWeap(Equipment equipment){
+		weapon=equipment;
+	}
+	public static void Attack(){
+		
 	}
 }
