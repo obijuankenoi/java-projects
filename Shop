@@ -4,6 +4,7 @@ import java.util.Random;
 public class Shop  {
 	
 	private String pClass="";
+	static Equipment weapon;
 	//Warrior
 	String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
 	String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
@@ -40,6 +41,7 @@ public class Shop  {
 		int roll=gen.nextInt(10);
 		if(roll<=2){
 			Equipment sword1=new Weapon(mods, name, gen.nextInt(10), 5);
+			Shop.setWeap(sword1);
 		}
 		else if(roll>2 && roll<=5){
 			
@@ -53,5 +55,11 @@ public class Shop  {
 	}
 	public void shopDisplay(String[]mods,String[]arr,String[] arr1,String[]potions){
 		
+	}
+	public static Equipment getWeap(){
+		return weapon;
+	}
+	public static void setWeap(Equipment newWeap){
+		weapon=newWeap;
 	}
 }
