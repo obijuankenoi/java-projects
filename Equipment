@@ -19,7 +19,7 @@ public class Equipment {
 	public static String getDesc(){
 		return desc;
 	}
-	public static String getPotion(){
+	public static String getPotionName(){
 		return potion;
 	}
 	public static int getDmg(){
