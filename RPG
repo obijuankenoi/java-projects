@@ -15,14 +15,17 @@ public class RPG {
 		 * create a range for each modifier
 		 * make it so both people dont die
 		 * add items to player inventory and shop
+		 * make the shop display
 		 */
 		int fTime=0, action=0;
 		boolean inShop=false;
 		ArrayList<Equipment> shop=new ArrayList<Equipment>();
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");
-		Shop.genEquip(1);
-		println("Welcome stranger what is thy name?"+Weapon.getWeapMod()+" "+Weapon.getWeapName()+" "+Weapon.getDmg()+" "+Weapon.getVal());
+		Shop.genWeap(1);
+		Shop.genSec(1);
+		Shop.genPotion(1);
+		println("Welcome stranger what is thy name?"+Potion.getPotionName()+" "+Potion.getValue()+" "+Potion.getPotionAmount());
 		Player.setName(scan.next());
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
 		println("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
