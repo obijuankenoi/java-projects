@@ -9,8 +9,7 @@ public class Player
 	static Random gen=new Random();
 	public static String name,response,result,death,shield,quiver,spellBook;
     public static int health=100,defense=0,coins=0;
-	public Equipment[] secondary;
-	public Equipment[] inv;
+	public Equipment[] secondary,inv;
 	public static Equipment invSize[]=new Equipment[30];
 	static String weapon;
 	public Player(String newName, int newClass){
@@ -77,8 +76,8 @@ public class Player
 		weapon=swords;
 	}
 	public static void validNumChk(int newNumResponse){
-		do{
 		numResponse=newNumResponse;
+		do{
 		if(numResponse<1||numResponse>3){
 		System.out.println(numResponse+" is not a valid answer.");
 		System.out.println("please try again.");
@@ -87,8 +86,8 @@ public class Player
 		}while(numResponse<1||numResponse>3);
 	}
 	public static void validChk(String newResponse){
-		do{
 		response=newResponse;
+		do{
 		if(!response.equals("yes")&&!response.equals("no")){
 			System.out.println(response+" is not a valid answer.");
 			System.out.println("Please try again");
