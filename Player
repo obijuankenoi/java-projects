@@ -7,11 +7,12 @@ public class Player
 	static int counter=0,numResponse,pClass,roll=0,pAttack=0;
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
-	public static String name,response,result,death,weapon,shield,quiver,spellBook;
+	public static String name,response,result,death,shield,quiver,spellBook;
     public static int health=100,defense=0,coins=0;
 	public Equipment[] secondary;
 	public Equipment[] inv;
 	public static Equipment invSize[]=new Equipment[30];
+	static String weapon;
 	public Player(String newName, int newClass){
 		name=newName;
 		pClass=newClass;
@@ -72,8 +73,8 @@ public class Player
 	public static String getWeap(){
 		return weapon;
 	}
-	public static void setWeap(String equipment){
-		weapon=equipment;
+	public static void setWeap(String swords){
+		weapon=swords;
 	}
 	public static void validNumChk(int newNumResponse){
 		do{
