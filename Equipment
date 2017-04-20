@@ -1,31 +1,31 @@
 package Gamemode;
 
 public class Equipment {
-	private int dmg,value;
-	private String desc;
-	private String mod,name,potion;
-	public Equipment(String mod,String name,String second,String potions, int value,int dmg){
-		this.mod=mod;
-		this.name=name;
-		this.potion=potion;
-		this.value=value;
-		this.dmg=dmg;
+	private static int dmg,value;
+	private static String mod,name,potion,desc;
+	public Equipment(String newMod,String newName,String newSecond,String newPotions, int newValue,int newDmg){
+		mod=newMod;
+		name=newName;
+		potion=newPotions;
+	    value=newValue;
+		dmg=newDmg;
 	}
-	public Equipment(String name2, String desc2, int value2, int dmg2) {
-	}
-	public String getName(){
+	public static String getName(){
 		return name;
 	}
-	public String getMod(){
+	public static String getMod(){
 		return mod;
 	}
-	public String getDesc(){
+	public static String getDesc(){
 		return desc;
 	}
-	public int getDmg(){
+	public static String getPotion(){
+		return potion;
+	}
+	public static int getDmg(){
 		return dmg;
 	}
-	public int getValue(){
+	public static int getValue(){
 		return value;
 	}
 }
