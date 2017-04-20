@@ -1,0 +1,44 @@
+package Gamemode;
+
+public class Secondary extends Equipment {
+	static String mod,sec;
+	static int val,amount;
+	static Equipment second;
+	public Secondary(String newMod, String newName, String newPotions, int newValue, int newAmount) {
+		super(newMod, newName, null, null, newValue, newAmount);
+		mod=newMod;
+		sec=newName;
+		val=newValue;
+		amount=newAmount;
+	}
+	public static Equipment getSecond(){
+		return second;
+	}
+	public static void setSecond(Equipment newSec){
+		second=newSec;
+	}
+	public static String getMod(){
+		return mod;
+	}
+	public static void setMod(String newMod){
+		mod=newMod;
+	}
+	public static String getSec(){
+		return sec;
+	}
+	public static void setSec(String newSecond){
+		sec=newSecond;
+	}
+	public static int getVal(){
+		return val;
+	}
+	public static void setVal(int newVal){
+		val=newVal;
+	}
+	public static int getAmount(){
+		return amount;
+	}
+	public static void setAmount(int newAmount){
+		amount=newAmount;
+	}
+	}
