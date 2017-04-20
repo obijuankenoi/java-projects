@@ -2,18 +2,20 @@ package Gamemode;
 
 import java.util.Random;
 public class Shop  {
-	
-	private String pClass="";
+	static int mRng=0,sRng=0;
 	static Equipment weapon;
 	//Warrior
 	static String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
-	static String[] defense={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield","Cloth Armor","Leather Armor","Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
+	static String[] shields={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield"};
+	static String[] heavyArmor={"Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
 	//Ranger
 	static String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
-	static String[] quivers={};
+	static String[] quivers={"Two-Point Arrow Quiver","Serrated Arrow Quiver","Sharktooth Arrow Quiver","Blunt Arrow Quiver","Fire Arrow Quiver","Fire Arrow Quiver","Broadhead Arrow Quiver","Penetrating Arrow Quiver","Spike-Point Arrow Quiver"};
+	static String[] mediumArmor={"Leather Armor"};
 	//Wizard
 	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
 	static String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	static String[] lightArmor={"Cloth Armor"};
 	//All
 	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
 	static String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
@@ -21,23 +23,38 @@ public class Shop  {
 		Random gen=new Random();
 		switch(clss){
 		case(1) :{
-			genEquip(mods[1],swords[1],defense[1],potions[1]);
+			//genEquip(mods[1],swords[1],shields[1],heavyArmor[1],potions[1]);
 		}
 		case(2) :{
-			genEquip(mods[1],bows[1],quivers[1],potions[1]);
+			//genEquip(mods[1],bows[1],quivers[1],mediumArmor[1],potions[1]);
 		}
 		case(3) :{
-			genEquip(mods[1],wands[1],spellBooks[1],potions[1]);
+			//genEquip(mods[1],wands[1],spellBooks[1],lightArmor[1],potions[1]);
 		}
 	}
 	}
 	
-	public static void genEquip(String mods,String name,String second,String potions){
+	public static void genEquip(int clss){
 		Random gen=new Random();
-		int roll=gen.nextInt(10);
+		int roll=1;
 		if(roll<=2){
-			Equipment sword1=new Weapon(mods, name, gen.nextInt(10), 5);
-			Weapon.setWeap(sword1);
+			switch(clss){
+			case(1) :{	
+				Weapon sword1=new Weapon(mods[gen.nextInt(mods.length-1)+1], swords[gen.nextInt(swords.length-1)+1], gen.nextInt(10), gen.nextInt(10));
+				Weapon.setWeap(sword1);
+				break;
+			}
+			case(2) :{
+				Weapon bow1=new Weapon(mods[gen.nextInt(mods.length-1)+1],bows[gen.nextInt(bows.length-1)+1],gen.nextInt(10),gen.nextInt(10));
+				Weapon.setWeap(bow1);
+				break;
+			}
+			case(3) :{
+				Weapon wand1=new Weapon(mods[gen.nextInt(mods.length-1)+1],bows[gen.nextInt(bows.length-1)+1],gen.nextInt(10),gen.nextInt(10));
+				Weapon.setWeap(wand1);
+				break;
+			}
+			}
 		}
 		else if(roll>2 && roll<=5){
 			
@@ -51,5 +68,34 @@ public class Shop  {
 	}
 	public static void shopDisplay(String mods,String name,String second,String potions){
 		
+	}
+	public static void defaultWeap(int clss){
+		switch(clss){
+		case(1) :{
+			Player.setWeap(swords[0]);
+			break;
+		}
+		case(2) :{
+			Player.setWeap(bows[0]);
+			break;
+		}
+		case(3) :{
+			Player.setWeap(wands[0]);
+			break;
+		}
+		}	
+	}
+	public static void defaultDef(int clss){
+		switch(clss){
+		case(1) :{
+			Player.setShield(shields[0]);
+		}
+		case(2) :{
+			Player.setQuiver(quivers[0]);
+		}
+		case(3) :{
+			Player.setSpellBook(spellBooks[0]);
+		}
+		}
 	}
 }
