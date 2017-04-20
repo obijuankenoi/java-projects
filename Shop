@@ -14,7 +14,7 @@ public class Shop  {
 	static String[] mediumArmor={"Leather Armor"};
 	//Wizard
 	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
-	static String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	static String[] spellBook={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
 	static String[] lightArmor={"Cloth Armor"};
 	//All
 	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
@@ -34,13 +34,13 @@ public class Shop  {
 	}
 	}
 	
-	public static void genEquip(int clss){
+	public static void genWeap(int clss){
 		Random gen=new Random();
 		int roll=1;
 		if(roll<=2){
 			switch(clss){
 			case(1) :{	
-				Weapon sword1=new Weapon(mods[gen.nextInt(mods.length-1)+1], swords[gen.nextInt(swords.length-1)+1], gen.nextInt(10), gen.nextInt(10));
+				Weapon sword1=new Weapon(mods[gen.nextInt(mods.length-1)+1], swords[gen.nextInt(swords.length-1)+1], gen.nextInt(10)+1, gen.nextInt(10)+1);
 				Weapon.setWeap(sword1);
 				break;
 			}
@@ -64,6 +64,46 @@ public class Shop  {
 		}
 		else{
 			
+		}
+	}
+	public static void genSec(int clss){
+		Random gen=new Random();
+		switch(clss){
+		case(1) :{
+			Secondary shield1=new Secondary(mods[gen.nextInt(mods.length-1)+1],shields[gen.nextInt(shields.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
+			Secondary.setSecond(shield1);
+			break;
+		}
+		case(2) :{
+			Secondary quiver1=new Secondary(mods[gen.nextInt(mods.length-1)+1], quivers[gen.nextInt(quivers.length-1)+1],null, gen.nextInt(10), gen.nextInt(10));
+			Secondary.setSecond(quiver1);
+			break;
+		}
+		case(3) :{
+			Secondary spellBook1=new Secondary(mods[gen.nextInt(mods.length-1)+1],spellBook[gen.nextInt(spellBook.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
+			Secondary.setSecond(spellBook1);
+			break;
+		}
+		}
+	}
+	public static void genPotion(int clss){
+		Random gen=new Random();
+		switch(clss){
+		case(1) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10), gen.nextInt(10));
+			Potion.setPotion(potion1);
+			break;
+		}
+		case(2) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10), gen.nextInt(10));
+			Potion.setPotion(potion1);
+			break;
+		}
+		case(3) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10), gen.nextInt(10));
+			Potion.setPotion(potion1);
+			break;
+		}
 		}
 	}
 	public static void shopDisplay(String mods,String name,String second,String potions){
@@ -94,7 +134,7 @@ public class Shop  {
 			Player.setQuiver(quivers[0]);
 		}
 		case(3) :{
-			Player.setSpellBook(spellBooks[0]);
+			Player.setSpellBook(spellBook[0]);
 		}
 		}
 	}
