@@ -1,13 +1,16 @@
 package Gamemode;
 
 public class Weapon extends Equipment{
-
-	public Weapon(String mods, String name, int value, int dmg) {
-		super(mods, name, null, null, value, dmg);
-	}
 	static String name,mod;
 	static int value,dmg;
 	static Equipment weap;
+	public Weapon(String mods, String newName, int newValue, int newDmg) {
+		super(mods, newName, null, null, newValue, newDmg);
+		mod=mods;
+		name=newName;
+		value=newValue;
+		dmg=newDmg;
+	}
 	public static Equipment getWeap(){
 		return weap;
 	}
