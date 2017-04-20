@@ -1,19 +1,20 @@
 package Gamemode;
 import java.util.Scanner;
+import java.util.Random;
 public class Player
 {
 	int constant=0;
-	static int counter=0,numResponse,pClass;
+	static int counter=0,numResponse,pClass,roll=0,pAttack=0;
 	static Scanner scan=new Scanner(System.in);
-	public static String name,response,result,death;
+	static Random gen=new Random();
+	public static String name,response,result,death,weapon,shield,quiver,spellBook;
     public static int health=100,defense=0,coins=0;
-	public static Equipment weapon;
 	public Equipment[] secondary;
 	public Equipment[] inv;
 	public static Equipment invSize[]=new Equipment[30];
-	public Player(String name, int pClass){
-		this.name=name;
-		this.pClass=pClass;
+	public Player(String newName, int newClass){
+		name=newName;
+		pClass=newClass;
 		for(counter=0;counter<=invSize.length;counter++){
 			invSize[counter]=null;
 		}
@@ -45,6 +46,12 @@ public class Player
 		return health;
 	}
 	public static void setHealth(int dmg){
+		health=dmg;
+	}
+	public static void addHealth(int amount){
+		health+=amount;
+	}
+	public static void subHealth(int dmg){
 		health-=dmg;
 	}
 	public static int getCoins(){
@@ -62,10 +69,10 @@ public class Player
 	public static void setName(String newName){
 		name=newName;
 	}
-	public static Equipment getWeap(){
+	public static String getWeap(){
 		return weapon;
 	}
-	public static void setWeap(Equipment equipment){
+	public static void setWeap(String equipment){
 		weapon=equipment;
 	}
 	public static void validNumChk(int newNumResponse){
@@ -105,5 +112,34 @@ public class Player
 	}
 	public static void setPClass(int newClass){
 		pClass=newClass;
+	}
+	public static int getRoll(){
+		roll=gen.nextInt();
+		return roll;
+	}
+	public static String getShield(){
+		return shield;
+	}
+	public static void setShield(String newShield){
+		shield=newShield;
+	}
+	public static String getQuiver(){
+		return quiver;
+	}
+	public static void setQuiver(String newQuiver){
+		quiver=newQuiver;
+	}
+	public static String getSpellBook(){
+		return spellBook;
+	}
+	public static void setSpellBook(String newSpellBook){
+		spellBook=newSpellBook;
+	}
+	public static int Attack(){
+		pAttack=gen.nextInt(10);
+		return pAttack;
+	}
+	public static int getDmg(){
+		return pAttack;
 	}
 }
