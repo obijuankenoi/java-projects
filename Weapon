@@ -47,6 +47,4 @@ public class Weapon extends Equipment{
 	public static void subWeapDmg(int sub){
 		dmg-=sub;
 	}
-
-
 }
