@@ -1,13 +1,44 @@
 package Gamemode;
 
 public class Potion extends Equipment{
-
-	public Potion(String[] mod, String[] name, String[] second, String[] potions, int value, int amount) {
-		super(mod, name, null, potions, value, amount);
+	static String mod,name;
+	static int val,amount;
+	static Equipment potion;
+	public Potion(String newMod, String newName, String newSecond, String newPotions, int newValue, int newDmg) {
+		super(null, null, null, newPotions, newValue, newDmg);
+		mod=newMod;
+		name=newPotions;
+		val=newValue;
+		amount=newDmg;
 	}
-
-	public static void main(String[] args) {
-
+	public static String getMod(){
+		return mod;
 	}
-
+	public static void setMod(String newMod){
+		mod=newMod;
+	}
+	public static String getPotionName(){
+		return name;
+	}
+	public static void setPotionName(String newName){
+		name=newName;
+	}
+	public static int getValue(){
+		return val;
+	}
+	public static void setPotionValue(int newVal){
+		val=newVal;
+	}
+	public static int getPotionAmount(){
+		return amount;
+	}
+	public static void setPotionAmount(int newAmount){
+		amount=newAmount;
+	}
+	public static Equipment getPotion(){
+		return potion;
+	}
+	public static void setPotion(Equipment newPotion){
+		potion=newPotion;
+	}
 }
