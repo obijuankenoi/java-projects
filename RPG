@@ -16,6 +16,8 @@ public class RPG {
 		 * make it so both people dont die
 		 * add items to player inventory and shop
 		 * make the shop display
+		 * add rewards for killing enemies
+		 * add coin loss for death
 		 */
 		int fTime=0, action=0;
 		boolean inShop=false;
@@ -25,7 +27,7 @@ public class RPG {
 		Shop.genWeap(1);
 		Shop.genSec(1);
 		Shop.genPotion(1);
-		println("Welcome stranger what is thy name?"+Potion.getPotionName()+" "+Potion.getValue()+" "+Potion.getPotionAmount());
+		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
 		println("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
@@ -54,8 +56,7 @@ public class RPG {
 		for(int i=0;i<20;i++)
 			print("-");
 		println("\n");
-		Player.setNumResponse(scan.nextInt());
-		Player.validNumChk(Player.getNumResponse());
+		Player.validNumChk(scan.nextInt());
 		 }
 		 if(Player.getNumResponse()==1){
 			Player.setPClass(Player.getNumResponse());
@@ -93,8 +94,8 @@ public class RPG {
 			for(int i=0;i<20;i++)
 				print("-");
 			println("\n");
-			Player.setResponse(scan.next());
-			if(Player.getResponse().equals("2")){
+			Player.validNumChk(scan.nextInt());
+			if(Player.getNumResponse()==2){
 				for(int i=0;i<20;i++)
 					print("-");
 					println("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is "
@@ -102,12 +103,12 @@ public class RPG {
 				for(int i=0;i<20;i++)
 					print("-");
 				println("\n");
-				Player.setResponse(scan.next());
-				if(Player.getResponse().equals("1")){
+				Player.validNumChk(scan.nextInt());
+				if(Player.getNumResponse()==1){
 					println("You go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
 							+ " on a table.\nDo you take it or leave?");
-					Player.setResponse(scan.next());
-					if(Player.getResponse().equals("1")){
+					Player.validNumChk(scan.nextInt());
+					if(Player.getNumResponse()==1){
 						if(Player.getPClass()==1){
 							Shop.defaultDef(Player.getPClass());
 							println("You pick up the item, inside is: "+Player.getShield()+".\n");
@@ -137,11 +138,11 @@ public class RPG {
 						}
 					}
 				}
-				else if(Player.getResponse().equals("2")){
+				else if(Player.getNumResponse()==2){
 					println("You go into the right house.\nInside is an old man, he does nothing but point at a pouch on a table.");
 					println("Do you grab the pouch or leave?");
-					Player.setResponse(scan.next());
-					if(Player.getResponse().equals("1")){
+					Player.validNumChk(scan.nextInt());
+					if(Player.getNumResponse()==1){
 						println("You pick up the pouch.\nInside there are some coins.");
 						Player.addCoins(50);;
 						for(int i=0;i<20;i++)
@@ -161,8 +162,8 @@ public class RPG {
 			println("\n");
 			do{
 				println("\nDo you want to go into the wild, visit the shop?");
-				Player.setResponse(scan.next());
-				if(Player.getResponse().equals("1")){
+				Player.validNumChk(scan.nextInt());
+				if(Player.getNumResponse()==1){
 					println("You go into the wild.");
 					Enemies.encounter();
 					do{
