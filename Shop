@@ -138,4 +138,8 @@ public class Shop  {
 		}
 		}
 	}
+	public static String getModName(int modNum){
+		String result=mods[modNum];
+		return result;
+	}
 }
