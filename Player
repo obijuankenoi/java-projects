@@ -135,4 +135,7 @@ public class Player
 	public static String getMod(){
 		return mod;
 	}
+	public static void setDmg(int newDmg){
+		dmg=newDmg;
+	}
 }
