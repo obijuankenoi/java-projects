@@ -5,17 +5,17 @@ public class Shop  {
 	static int mRng=0,sRng=0;
 	static Equipment weapon;
 	//Warrior
-	static String[] swords={"Wooden Sword","Stone Sword","Iron Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+	static String[] swords={"Wooden Sword","Stone Sword","Bronze Sword","Iron Sword","Steel Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
 	static String[] shields={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield"};
 	static String[] heavyArmor={"Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
 	//Ranger
 	static String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
 	static String[] quivers={"Two-Point Arrow Quiver","Serrated Arrow Quiver","Sharktooth Arrow Quiver","Blunt Arrow Quiver","Fire Arrow Quiver","Fire Arrow Quiver","Broadhead Arrow Quiver","Penetrating Arrow Quiver","Spike-Point Arrow Quiver"};
-	static String[] mediumArmor={"Leather Armor"};
+	static String[] mediumArmor={"Soft Leather Armor","Leather Armor","Hard Leather Armor","Studded Leather Armor"};
 	//Wizard
 	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
 	static String[] spellBook={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
-	static String[] lightArmor={"Cloth Armor"};
+	static String[] lightArmor={"Cloth Armor","Wizard Robes","Spider Silk Robes","Combat Robes","Skeletal Armor"};
 	//All
 	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
 	static String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
@@ -40,7 +40,7 @@ public class Shop  {
 		if(roll<=2){
 			switch(clss){
 			case(1) :{	
-				Weapon sword1=new Weapon(mods[gen.nextInt(mods.length-1)+1], swords[gen.nextInt(swords.length-1)+1], gen.nextInt(10)+1, gen.nextInt(10)+1);
+				Equipment sword1=new Equipment(mods[gen.nextInt(mods.length-1)], swords[gen.nextInt(swords.length-1)+1], null, null, gen.nextInt(10)+1, gen.nextInt(10)+1);
 				Weapon.setWeap(sword1);
 				break;
 			}
@@ -112,15 +112,15 @@ public class Shop  {
 	public static void defaultWeap(int clss){
 		switch(clss){
 		case(1) :{
-			Player.setWeap(swords[0]);
+			Player.setWeap(mods[0],swords[0],5,10);
 			break;
 		}
 		case(2) :{
-			Player.setWeap(bows[0]);
+			Player.setWeap(mods[0],bows[0],5,10);
 			break;
 		}
 		case(3) :{
-			Player.setWeap(wands[0]);
+			Player.setWeap(mods[0],wands[0],5,10);
 			break;
 		}
 		}	
