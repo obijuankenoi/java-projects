@@ -1,0 +1,40 @@
+package Gamemode;
+
+public class World {
+	static String worldName;
+	static String worlds[]={"Forest"};
+	static int floorNum=0,floorLvl=0;
+	public static void genWorld(){
+		worldName=worlds[0];
+	}
+	public static String getWorld(){
+		return worldName;
+	}
+	public static void setWorld(String newWorld){
+		worldName=newWorld;
+	}
+	public static int getFloorNum(){
+		return floorNum;
+	}
+	public static void setFloorNum(int newFloor){
+		floorNum=newFloor;
+	}
+	public static void addFloorNum(int plusFloor){
+		floorNum+=plusFloor;
+	}
+	public static void subFloorNum(int subFloor){
+		floorNum-=subFloor;
+	}
+	public static void setFloorLevel(int newLevel){
+		floorLvl=newLevel;
+	}
+	public static int getFloorLevel(){
+		return floorLvl;
+	}
+	public static void addFloorLevel(int addFloor){
+		floorLvl+=addFloor;
+	}
+	public static void subFLoorLevel(int subFloor){
+		floorLvl-=subFloor;
+	}
+}
