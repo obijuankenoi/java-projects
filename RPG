@@ -6,31 +6,31 @@ public class RPG {
 	static Random gen=new Random();
 	static Scanner scan=new Scanner(System.in);
 	static String rad="Radulfus: ", geo="Geofridus";
+	static String[] space=new String[20];
 	public static void main(String[] args){
-		/*
-		 * BrainStrom:
+		/* BrainStrom:
 		 * if no spell book, wand is a melee weapon
 		 * figure out the welcome back text for shop
-		 * function to randomly generate items
 		 * create a range for each modifier
-		 * make it so both people dont die
-		 * add items to player inventory and shop
+		 * add items to player inventory and shop*
 		 * make the shop display
 		 * add rewards for killing enemies
 		 * add coin loss for death
+		 * switch statement to set chances of weapons
+		 * smack with bow if player had no arrows
+		 * add stats(Strength, Defense)
+		 * item roll for stats
 		 */
-		int fTime=0, action=0;
+		int fTime=0;
 		boolean inShop=false;
 		ArrayList<Equipment> shop=new ArrayList<Equipment>();
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
+		playerInventory.clearInv();
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");
-		Shop.genWeap(1);
-		Shop.genSec(1);
-		Shop.genPotion(1);
 		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
-		println("Why hello there young traveller.\n\nI am Radulfus.\n\nI see your name is "+Player.getName()+", is that right?");
+		println("Why hello there young traveller.\n\nI am Radulfus.\n\nRadulfus: I see your name is "+Player.getName()+", is that right?");
 		Player.validChk(scan.next());	
 		if(Player.getResponse().equals("yes")){
 			println("\n"+rad+"Very well!\n");
@@ -43,140 +43,137 @@ public class RPG {
 		}
 		if(Player.getResponse().equals("yes")||Player.getResponse().equals("no")){
 		println(rad+"I see ye have no steel.\nCome with me "+Player.getName()+" I have something to show you.\n");
-		for(int i=0;i<20;i++)
-			print("-");
-			println("\n\n**You enter "+rad.substring(0,8)+"' home.**\n");
-		for(int i=0;i<20;i++)
-			print("-");
+		spacer();
+			println("\n**You enter "+rad.substring(0,8)+"' home.**");
+		spacer();
 		println("\n\n"+rad+"I have these weapons for ye.");
-		println("Do choose wisely as you cannot change your mind later on.");
-		for(int i=0;i<20;i++)
-			print("-");
+		println("Do choose wisely as you cannot change your mind later on.\n");
+		spacer();
 			println("\n**"+rad.substring(0,8)+" puts a sword, bow, and a wand on the table in front of you.\nChoose one.**");
-		for(int i=0;i<20;i++)
-			print("-");
+		spacer();
 		println("\n");
 		Player.validNumChk(scan.nextInt());
 		 }
 		 if(Player.getNumResponse()==1){
 			Player.setPClass(Player.getNumResponse());
-			for(int i=0;i<20;i++)
-				print("-");
+			spacer();
 				Shop.defaultWeap(Player.getPClass());
-				println("\n**Item recieved: "+Player.getWeap());
-			for(int i=0;i<20;i++)
-				print("-");
-			println("\n\n"+rad+"that "+Player.getWeap()+" was my fathers before he died fighting the dwarf king.\n");
+				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName());
+			spacer();
+			playerInventory.addUIInv(Player.getMod(), Player.getWeapName());
+			println("\n\n"+rad+"that "+Player.getWeapName()+" was my fathers before he died fighting the dwarf king.\n"+playerInventory.getInv());
 		}
 		else if(Player.getNumResponse()==2){
 			Player.setPClass(Player.getNumResponse());;
-			for(int i=0;i<20;i++)
-				print("-");
+			spacer();
 			Shop.defaultWeap(Player.getPClass());
-				println("\n**Item recieved: "+Player.getWeap()+"**");
-			for(int i=0;i<20;i++)
-				print("-");
-			println("\n\n"+rad+"I would go hunting as a boy with that "+Player.getWeap()+".\n");
+				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName()+"**");
+			spacer();
+			println("\n\n"+rad+"I would go hunting as a boy with that "+Player.getWeapName()+".\n");
 		}
 		else if(Player.getNumResponse()==3){
 			Player.setPClass(Player.getNumResponse());
-			for(int i=0;i<20;i++)
-				print("-");
+			spacer();
 			Shop.defaultWeap(Player.getPClass());
-				println("\n\n**Item recieved: "+Player.getWeap()+"**");
-			for(int i=0;i<20;i++)
-				print("-");
+				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName()+"**");
+			spacer();
 			println("\n\n"+rad+"I could never figure out how to use that stick.\n");
 		}
-		 for(int i=0;i<20;i++)
-				print("-");
+		 	spacer();
 				println("\n**Now that "+rad.substring(0, 8)+" gave you a weapon you can leave town or walk around.**");
-			for(int i=0;i<20;i++)
-				print("-");
-			println("\n");
+				spacer();
+				print("\n");
 			Player.validNumChk(scan.nextInt());
 			if(Player.getNumResponse()==2){
-				for(int i=0;i<20;i++)
-					print("-");
+				spacer();
 					println("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is "
 							+ "setting.\nYou can only choose to go in one house, do you go in the left or right one?**");
-				for(int i=0;i<20;i++)
-					print("-");
-				println("\n");
+				spacer();
+				print("\n");
 				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
-					println("You go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
+					spacer();
+					println("\nYou go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
 							+ " on a table.\nDo you take it or leave?");
+					spacer();
+					print("\n");
 					Player.validNumChk(scan.nextInt());
 					if(Player.getNumResponse()==1){
 						if(Player.getPClass()==1){
 							Shop.defaultDef(Player.getPClass());
-							println("You pick up the item, inside is: "+Player.getShield()+".\n");
-							for(int i=0;i<20;i++)
-								print("-");
+							spacer();
+							println("\nYou pick up the item, inside is: "+Player.getShield()+".\n");
+							spacer();
 								println("\n**Item recieved: "+Player.getShield()+".**");
+							spacer();
+							println("\n");
 						}
 						else if(Player.getPClass()==2){
 							Shop.defaultDef(Player.getPClass());
-							println("You pick up the item, inside is: "+Player.getQuiver()+".");
-							for(int i=0;i<20;i++)
-								print("-");
+							println("You pick up the item, inside is: "+Player.getQuiver()+".\n");
+							spacer();
 								println("\n**Item recieved: "+Player.getQuiver()+".**");
-							for(int i=0;i<20;i++)
-								print("-");
+							spacer();
 							println("\n");
 						}
 						else if(Player.getPClass()==3){
 							Shop.defaultDef(Player.getPClass());
-							println("You pick up the item, inside is: "+Player.getSpellBook()+".");
-							for(int i=0;i<20;i++)
-								print("-");
+							spacer();
+							println("\nYou pick up the item, inside is: "+Player.getSpellBook()+".\n");
+							spacer();
 								println("\n**Item recieved: "+Player.getSpellBook()+".**");
-							for(int i=0;i<20;i++)
-								print("-");
-							println("\n");
+							spacer();
+							print("\n");
 						}
 					}
 				}
 				else if(Player.getNumResponse()==2){
-					println("You go into the right house.\nInside is an old man, he does nothing but point at a pouch on a table.");
+					spacer();
+					println("\nYou go into the right house.\nInside is an old man, he does nothing but point at a pouch on a table.");
 					println("Do you grab the pouch or leave?");
+					spacer();
+					println("\n");
 					Player.validNumChk(scan.nextInt());
 					if(Player.getNumResponse()==1){
-						println("You pick up the pouch.\nInside there are some coins.");
+						spacer();
+						println("\nYou pick up the pouch.\nInside there are some coins.");
+						spacer();
 						Player.addCoins(50);;
-						for(int i=0;i<20;i++)
-							print("-");
+						spacer();
 							println("\n**Item recieved: 50 Coins.**");
-						for(int i=0;i<20;i++)
-							print("-");
-						println("You thank him and exit the house.");
+						spacer();
+						println("\nYou thank him and exit the house.");
+						spacer();
+						println("\n");
 					}
 				}
 			}
-			for(int i=0;i<20;i++)
-				print("-");
-				println("\n**From here use numbers to navigate the menu.**");
-			for(int i=0;i<20;i++)
-				print("-");
+			spacer();
+				println("\n**From here only use numbers to navigate the menu.**");
+				spacer();
 			println("\n");
 			do{
-				println("\nDo you want to go into the wild, visit the shop?");
+				println("\nDo you want to go into the wild or visit the shop?");
 				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
-					println("You go into the wild.");
+					println("You go into the wild.\n");
 					Enemies.encounter();
 					do{
-					println(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+					println("\n\n"+Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
 					println("Do you Attack, Defend, Open your inventory or Flee?");
-					action=scan.nextInt();
-					fightScene(action);
+					Player.validFightChk(scan.nextInt());
+					fightScene(Player.getNumResponse());
 					if(Player.getHealth()<1){
 						println(Player.getName()+" died.");
 						break;
 					}
 					else if(Enemies.getHealth()<1){
 						println(Enemies.getName()+" died.");
+						spacer();
+						println("\n"+Player.getName()+"'s loot: "+Enemies.genECoinDrop()+" Coins!");
+						spacer();
+						Player.addCoins(Enemies.getCoinDrop());
+						print("\n");
 						break;
 					}
 					}while(Enemies.getHealth()>0||Player.getHealth()>0);
@@ -230,8 +227,8 @@ public class RPG {
 								do{
 								println(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
 								println("Do you Attack, Defend, Use your bag or Flee?");
-								action=scan.nextInt();
-								fightScene(action);
+								Player.setNumResponse(scan.nextInt());
+								fightScene(Player.getNumResponse());
 								}while(Enemies.getHealth()>0||Enemies.getHealth()>0);
 						 }
 					}
@@ -250,21 +247,32 @@ public class RPG {
 	public static void fightScene(int input){
 		switch(input){
 		case(1) :{
-			if(Player.getHealth()>1){
 			Enemies.subHealth(Player.Attack());
-			println("You deal: "+Player.getDmg()+" Damage!\n");
+			if(Player.getHealth()>1&&Player.getDmg()>0){	
+			spacer();
+			println("\nYou deal: "+Player.getDmg()+" Damage!\n");
 			}
-			if(Enemies.getHealth()>1){
+			else if(Player.getDmg()==0){
+				spacer();
+				println("You Missed!\n");
+			}
 			Player.subHealth(Enemies.Attack());
-			println(Enemies.getName()+" deals "+Enemies.getDmg()+" Damage!\n");
+			if(Enemies.getHealth()>1&&Enemies.getDmg()>0){
+			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
+			spacer();
+			}
+			else if(Enemies.getDmg()==0){
+				println(Enemies.getName()+" Missed!\n");
+			    spacer();
 			}
 			break;
 		}
 		case(2) :{
 			println("Defend\n");
 			if(Enemies.getHealth()>1){
-			Player.setHealth(Enemies.Attack());
-			println(Enemies.getName()+" deals "+Enemies.getDmg()+" Damage!\n");
+			Player.subHealth(Enemies.Attack());
+			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
+			spacer();
 			}
 			break;
 		}
@@ -275,16 +283,23 @@ public class RPG {
 		case(4) :{
 			println("You attempt to flee!\n");
 			if(Player.getRoll()>Enemies.getRoll()){
+				spacer();
 				println("You successfully escaped!");
+				spacer();
 				break;
 			}
 			else{
 				println("You failed to escape!");
-				Player.setHealth(Enemies.Attack());
+				Player.subHealth(Enemies.Attack());
 			}
 			break;
 		}
 		}
 	}
-	
+	public static void spacer(){
+		for(int i=0;i<20;i++){
+			space[i]="-";
+		print(space[i]);
+		}
+	}
 }
