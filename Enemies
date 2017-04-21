@@ -2,15 +2,16 @@ package Gamemode;
 import java.util.Random;
 public class Enemies {
 	static Random gen=new Random();
-	static int eHealth=100,bHealth=100,eAttack=0,roll=0;
+	static int eHealth=100,bHealth=100,eAttack=0,roll=0,cDrop=0;;
 	static String eName="",death;
-	static String[] enemy={"Bandit","Assassin","Trained Assassin"};
-	String[] boss={"Hydra","Dragon","Dwarf King","Basalisk"};
+	static String[] enemy={"Bandit","Assassin","Trained Assassin","Troll","Spider","Goblin","Gnome","Giant Rat","Mercenary","Rogue Assassin","Snake","Deserter","Dwarf","Zombie","Scorpion","Imp"};
+	String[] boss={"Hydra","Dragon","Dwarf King","Basilisk","Giant Mole","King Black Dragon","Queen Black Dragon",};
 	
 	public static void encounter(){
 		eName=enemy[gen.nextInt(enemy.length)];
-		System.out.println("You encounter: "+eName);
-		
+		RPG.spacer();
+		System.out.println("\nYou encounter: "+eName);
+		RPG.spacer();
 	}
 	public static String getName(){
 		return eName;
@@ -37,5 +38,16 @@ public class Enemies {
 	}
 	public static int getDmg(){
 		return eAttack;
+	}
+	public static int genECoinDrop(){
+		cDrop=gen.nextInt(50)+1;
+		return cDrop;
+	}
+	public static int genBCoinDrop(){
+		cDrop=gen.nextInt(100)+1;
+		return cDrop;
+	}
+	public static int getCoinDrop(){
+		return cDrop;
 	}
 }
