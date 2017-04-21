@@ -20,12 +20,14 @@ public class RPG {
 		 * smack with bow if player had no arrows
 		 * add stats(Strength, Defense)
 		 * item roll for stats
+		 * make 2-D Array for inventory
 		 */
 		int fTime=0;
 		boolean inShop=false;
 		ArrayList<Equipment> shop=new ArrayList<Equipment>();
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
-		playerInventory.clearInv();
+		// playerInventory.clearInv();
+		World.genWorld();
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");
 		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
@@ -60,8 +62,9 @@ public class RPG {
 				Shop.defaultWeap(Player.getPClass());
 				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName());
 			spacer();
-			playerInventory.addUIInv(Player.getMod(), Player.getWeapName());
-			println("\n\n"+rad+"that "+Player.getWeapName()+" was my fathers before he died fighting the dwarf king.\n"+playerInventory.getInv());
+			//playerInventory.addUIInv("Broekn", "Sword");
+			//playerInventory.addUIInv("Broek", "Bow");
+			println("\n\n"+rad+"that "+Player.getWeapName()+" was my fathers before he died fighting the dwarf king.\n");
 		}
 		else if(Player.getNumResponse()==2){
 			Player.setPClass(Player.getNumResponse());;
@@ -156,7 +159,7 @@ public class RPG {
 				println("\nDo you want to go into the wild or visit the shop?");
 				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
-					println("You go into the wild.\n");
+					println("You go into the "+getWorldInfo()+"\n");
 					Enemies.encounter();
 					do{
 					println("\n\n"+Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
@@ -164,7 +167,9 @@ public class RPG {
 					Player.validFightChk(scan.nextInt());
 					fightScene(Player.getNumResponse());
 					if(Player.getHealth()<1){
-						println(Player.getName()+" died.");
+						println("\n"+Player.getName()+" died.");
+						spacer();
+						println("\n");
 						break;
 					}
 					else if(Enemies.getHealth()<1){
@@ -174,6 +179,8 @@ public class RPG {
 						spacer();
 						Player.addCoins(Enemies.getCoinDrop());
 						print("\n");
+						Enemies.setHealth(100);
+						World.addFloorNum(1);
 						break;
 					}
 					}while(Enemies.getHealth()>0||Player.getHealth()>0);
@@ -248,6 +255,7 @@ public class RPG {
 		switch(input){
 		case(1) :{
 			Enemies.subHealth(Player.Attack());
+			Player.subHealth(Enemies.Attack());
 			if(Player.getHealth()>1&&Player.getDmg()>0){	
 			spacer();
 			println("\nYou deal: "+Player.getDmg()+" Damage!\n");
@@ -256,9 +264,13 @@ public class RPG {
 				spacer();
 				println("You Missed!\n");
 			}
-			Player.subHealth(Enemies.Attack());
 			if(Enemies.getHealth()>1&&Enemies.getDmg()>0){
+				if(Player.getHealth()<=0){
+					spacer();
+					print("\n");
+				}
 			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
+			if(Player.getHealth()>0)
 			spacer();
 			}
 			else if(Enemies.getDmg()==0){
@@ -272,7 +284,6 @@ public class RPG {
 			if(Enemies.getHealth()>1){
 			Player.subHealth(Enemies.Attack());
 			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
-			spacer();
 			}
 			break;
 		}
@@ -301,5 +312,8 @@ public class RPG {
 			space[i]="-";
 		print(space[i]);
 		}
+	}
+	public static String getWorldInfo(){
+		return World.getWorld()+".\nFloor: "+World.getFloorLevel()+" Level: "+World.getFloorNum();
 	}
 }
