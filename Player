@@ -7,40 +7,14 @@ public class Player
 	static int counter=0,numResponse,pClass,roll=0,pAttack=0;
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
-	public static String name,response,result,death,shield,quiver,spellBook;
-    public static int health=100,defense=0,coins=0;
+	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName;
+    public static int health=100,defense=0,coins=0,val,dmg;
 	public Equipment[] secondary,inv;
 	public static Equipment invSize[]=new Equipment[30];
 	static String weapon;
 	public Player(String newName, int newClass){
 		name=newName;
 		pClass=newClass;
-		for(counter=0;counter<=invSize.length;counter++){
-			invSize[counter]=null;
-		}
-	}
-	public static void pickUp(Equipment equip){
-		for(counter=0;counter<invSize.length;counter++){
-		if(invSize[counter]==null){
-			invSize[counter]=equip;
-			break;
-		}
-		}
-		if(counter==invSize.length){
-			System.out.println("Your inventory is full, would you like to drop an item?");
-			response=scan.next();
-			if(!response.equals("yes")&&!response.equals("no")){
-				System.out.println(response+" is not a valid answer.");
-				System.out.println("Please try again");
-				response=scan.next();
-			}
-			else if(response.equals("yes")){
-				
-			}
-			else if(response.equals("no")){
-				
-			}
-		}
 	}
 	public static int getHealth(){
 		return health;
@@ -72,8 +46,11 @@ public class Player
 	public static String getWeap(){
 		return weapon;
 	}
-	public static void setWeap(String swords){
-		weapon=swords;
+	public static void setWeap(String newMod,String newName, int newVal,int newDmg){
+		mod=newMod;
+		weapName=newName;
+		val=newVal;
+		dmg=newDmg;
 	}
 	public static void validNumChk(int newNumResponse){
 		numResponse=newNumResponse;
@@ -136,10 +113,26 @@ public class Player
 		spellBook=newSpellBook;
 	}
 	public static int Attack(){
-		pAttack=gen.nextInt(10);
+		pAttack=gen.nextInt(dmg)+dmg/2;
 		return pAttack;
 	}
 	public static int getDmg(){
 		return pAttack;
+	}
+	public static void validFightChk(int newNumResponse){
+		numResponse=newNumResponse;
+		do{
+		if(numResponse<1||numResponse>4){
+		System.out.println(numResponse+" is not a valid answer.");
+		System.out.println("please try again.");
+		numResponse=scan.nextInt();
+		}
+		}while(numResponse<1||numResponse>4);
+	}
+	public static String getWeapName(){
+		return weapName;
+	}
+	public static String getMod(){
+		return mod;
 	}
 }
