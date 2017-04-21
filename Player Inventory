@@ -1,0 +1,60 @@
+package Gamemode;
+import java.util.Scanner;
+public class playerInventory {
+	static Scanner scan=new Scanner(System.in);
+	static int id=0,maxItems=10,value,dmg,counter=0;
+	static String mod,name,potion,response,itemName;
+	static String uiInv[]=new String [maxItems];
+	static Equipment pInv[]=new Equipment[uiInv.length];
+	public static int getInvSize(){
+		return maxItems;
+	}
+	public static void setInvSize(int newMax){
+		maxItems=newMax;
+	}
+	public static void addPInv(Equipment equip){
+		for(counter=0;counter<pInv.length;counter++){
+			if(pInv[counter]==null){
+				pInv[counter]=equip;
+				break;
+			}
+			}
+	}
+	public static void addUIInv(String newMod,String newName){
+		for(counter=0;counter<uiInv.length;counter++){
+			for(counter=0;counter<uiInv.length;counter++){
+				if(uiInv[counter]==null){
+					uiInv[counter]=newMod+" "+newName;
+					break;
+				}
+			}
+			if(counter==uiInv.length){
+				System.out.println("Your inventory is full, would you like to drop an item?");
+				response=scan.next();
+				if(!response.equals("yes")&&!response.equals("no")){
+					System.out.println(response+" is not a valid answer.");
+					System.out.println("Please try again");
+					response=scan.next();
+				}
+				else if(response.equals("yes")){
+					System.out.println("Which item do you want to drop?");
+					response=scan.next();
+				}
+				else if(response.equals("no")){
+					
+				}
+			}
+		}
+	}
+	public static String getInv(){
+		for(int i=0;i<uiInv.length;i++)
+			itemName=uiInv[i];
+		return itemName;
+	}
+	public static void clearInv(){
+		for(counter=0;counter<=pInv.length-1;counter++){
+			pInv[counter]=null;
+			uiInv[counter]=null;
+		}
+	}
+}
