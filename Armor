@@ -1,14 +1,15 @@
 package Gamemode;
 public class Armor extends Equipment{
 	static String mod,name;
-	static int val,dmg;
+	static int val,dmg,id;
 	static Equipment armor;
-	public Armor(String newMod, String newName, String newPotions, int newValue, int newDmg) {
-		super(newMod, newName, null, newValue, newDmg);
+	public Armor(String newMod, String newName, String newPotions, int newValue, int newDmg,int newId) {
+		super(newMod, newName, null, newValue, newDmg,newId);
 		mod=newMod;
 		name=newName;
 		val=newValue;
 		dmg=newDmg;
+		id=newId;
 	}
 	public static String getMod(){
 		return mod;
@@ -39,5 +40,11 @@ public class Armor extends Equipment{
 	}
 	public static void setArmor(Equipment equip){
 		armor=equip;
+	}
+	public static int getId(){
+		return id;
+	}
+	public static void setId(int newId){
+		id=newId;
 	}
 }
