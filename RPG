@@ -13,7 +13,6 @@ public class RPG {
 		 * figure out the welcome back text for shop
 		 * create a range for each modifier
 		 * add items to player inventory and shop*
-		 * make the shop display
 		 * add rewards for killing enemies
 		 * add coin loss for death
 		 * switch statement to set chances of weapons
@@ -21,6 +20,8 @@ public class RPG {
 		 * add stats(Strength, Defense)
 		 * item roll for stats
 		 * keep defending for damage boost
+		 * add wizards can heal
+		 * spellbooks increase dmg and heal
 		 */
 		int fTime=0;
 		boolean inShop=false;
@@ -28,15 +29,10 @@ public class RPG {
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
 		playerInventory.clearInv();
 		World.genWorld();
-		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n");
-		println("Before you start, would you like to play with music?");
-		Player.validChk(scan.next());
-		if(Player.getResponse().equals("yes")){
-			gameMusic.startMusic();
-			println("\n\n\n");
-		}
+		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");	
 		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
+		//gameMusic.startMusic();
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
 		println("Why hello there young traveller.\n\nI am Radulfus.\n\nRadulfus: I see your name is "+Player.getName()+", is that right?");
 		Player.validChk(scan.next());	
@@ -194,7 +190,7 @@ public class RPG {
 					}
 					}while(Enemies.getHealth()>0||Player.getHealth()>0);
 				}
-				else if(Player.getResponse().equals("2")){
+				else if(Player.getNumResponse()==2){
 					if(fTime==0){
 						inShop=true;
 						println("I see this is your first time at my shop.\nThe names "+geo+".");
@@ -202,11 +198,9 @@ public class RPG {
 							println("What can I do ya for?\nBuying=1, Selling=2");
 							Player.setNumResponse(scan.nextInt());
 							Player.validNumChk(Player.getNumResponse());
-							 if(Player.getNumResponse()==1){
-								 println("Heres what I've got.");
-								 for(int i=0;i<shop.size();i++){
-									 println(i+". "+shop.get(i).getName());
-									 println("What would you like to buy?");
+							 if(Player.getNumResponse()==1){								 
+									 Shop.shopDisplay(Player.getPClass());
+									
 									 Player.setNumResponse(scan.nextInt());
 									 println(shop.get(Player.getNumResponse()).getName()+" costs "+shop.get(Player.getNumResponse()).getValue()+
 											 " Coins.\nYou have "+Player.getCoins()+" Coins." );
@@ -220,13 +214,8 @@ public class RPG {
 										 }
 									 }
 									 else{
-										 println("Purchased: "+shop.get(Player.getNumResponse()).getName());
-										 pInv.add(shop.get(Player.getNumResponse()));
-										 for(int f=0;i<pInv.size();f++){
-											 pInv.get(f);
-										 }
-									 }
-								 }
+										 println("Purchased: "+shop.get(Player.getNumResponse()).getName());										
+									 }								 
 							 }
 							 else if(Player.getNumResponse()==2){
 								 println("Lets see what you've got");
@@ -236,7 +225,7 @@ public class RPG {
 									 Player.setNumResponse(scan.nextInt());
 								 }
 							 }
-						}while(Player.getNumResponse()==1);
+						}while(inShop=true);
 						if(Player.getNumResponse()==2 && inShop==false){
 							 println("You go into the wild.");
 								Enemies.encounter();
@@ -297,7 +286,6 @@ public class RPG {
 			println("\n"+Player.getName()+" blocked: "+Player.getBlock()+" Damage!");
 			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
 			spacer();
-			
 			}
 			else if(Player.getBlock()>Enemies.getDmg()){
 				Player.addHealth(Enemies.getDmg());
