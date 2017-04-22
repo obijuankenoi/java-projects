@@ -27,7 +27,6 @@ public class playerInventory {
 	}
 	public static void addUIInv(String newMod,String newName){
 		for(counter=0;counter<uiInv.length;counter++){
-			
 			if(uiInv[counter]==null){
 					fullName=counter+". "+newMod+" "+newName;
 					uiInv[counter]=fullName;
