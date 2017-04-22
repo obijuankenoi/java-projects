@@ -1,0 +1,14 @@
+package Gamemode;
+import java.io.IOException;
+
+public class gameMusic{
+	
+	public static void startMusic(){
+		String command = "\"C:/Program Files (x86)/Windows Media Player/wmplayer.exe\" \"C:/Lil_Uzi_Vert_-_XO_Tour_Life_Lyrics_on_screen_.wav\"";
+		try {
+		    Process p = Runtime.getRuntime().exec(command);}
+		catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
+}
