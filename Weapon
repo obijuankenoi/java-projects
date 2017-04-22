@@ -1,14 +1,15 @@
 package Gamemode;
 public class Weapon extends Equipment{
 	static String name,mod;
-	static int value,dmg;
+	static int value,dmg,id;
 	static Equipment weap;
-	public Weapon(String mods, String newName, int newValue, int newDmg) {
-		super(mods, newName, null, newValue, newDmg);
+	public Weapon(String mods, String newName, int newValue, int newDmg,int newId) {
+		super(mods, newName, null, newValue, newDmg,newId);
 		mod=mods;
 		name=newName;
 		value=newValue;
 		dmg=newDmg;
+		id=newId;
 	}
 	public static Equipment getWeap(){
 		return weap;
@@ -45,5 +46,11 @@ public class Weapon extends Equipment{
 	}
 	public static void subWeapDmg(int sub){
 		dmg-=sub;
+	}
+	public static int getId(){
+		return id;
+	}
+	public static void setId(int newId){
+		id=newId;
 	}
 }
