@@ -2,14 +2,15 @@ package Gamemode;
 import java.util.Random;
 public class Equipment {
 	static Random gen=new Random();
-	private static int dmg,value;
+	private static int dmg,value,id;
 	private static String mod,name,potion,desc;
-	public Equipment(String newMod,String newName,String newPotions, int newValue,int newDmg){
+	public Equipment(String newMod,String newName,String newPotions, int newValue,int newDmg,int newId){
 		mod=newMod;
 		name=newName;
 		potion=newPotions;
 	    value=newValue;
 		dmg=newDmg;
+		id=newId;
 	}
 	public static String getName(){
 		return name;
@@ -37,5 +38,11 @@ public class Equipment {
 				Player.setDmg(range);
 			}
 		}
+	}
+	public static int getId(){
+		return id;
+	}
+	public static void setId(int newId){
+		id=newId;
 	}
 }
