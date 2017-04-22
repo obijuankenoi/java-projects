@@ -3,14 +3,20 @@ import java.util.Random;
 public class Enemies {
 	static Random gen=new Random();
 	static int eHealth=100,bHealth=100,eAttack=0,roll=0,cDrop=0;;
-	static String eName="",death;
+	static String eName="",death,bName="";
 	static String[] enemy={"Bandit","Assassin","Trained Assassin","Troll","Spider","Goblin","Gnome","Giant Rat","Mercenary","Rogue Assassin","Snake","Deserter","Dwarf","Zombie","Scorpion","Imp"};
-	String[] boss={"Hydra","Dragon","Dwarf King","Basilisk","Giant Mole","King Black Dragon","Queen Black Dragon",};
+	static String[] boss={"Hydra","Dragon","Dwarf King","Basilisk","Giant Mole","King Black Dragon","Queen Black Dragon",};
 	
 	public static void encounter(){
 		eName=enemy[gen.nextInt(enemy.length)];
 		RPG.spacer();
 		System.out.println("\nYou encounter: "+eName);
+		RPG.spacer();
+	}
+	public static void bossEncounter(){
+		bName=boss[gen.nextInt(enemy.length)];
+		RPG.spacer();
+		System.out.println("\nBoss encounter: "+bName);
 		RPG.spacer();
 	}
 	public static String getName(){
