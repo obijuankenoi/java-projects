@@ -2,8 +2,8 @@ package Gamemode;
 
 public class World {
 	static String worldName;
-	static String worlds[]={"Forest"};
-	static int floorNum=0,floorLvl=0;
+	static String worlds[]={"Forest","Woods"};
+	static int floorNum=0,worldLvl=0;
 	public static void genWorld(){
 		worldName=worlds[0];
 	}
@@ -25,16 +25,23 @@ public class World {
 	public static void subFloorNum(int subFloor){
 		floorNum-=subFloor;
 	}
-	public static void setFloorLevel(int newLevel){
-		floorLvl=newLevel;
+	public static void setWorldLevel(int newLevel){
+		worldLvl=newLevel;
 	}
-	public static int getFloorLevel(){
-		return floorLvl;
+	public static int getWorldLevel(){
+		return worldLvl;
 	}
-	public static void addFloorLevel(int addFloor){
-		floorLvl+=addFloor;
+	public static void addWorldLevel(int addFloor){
+		worldLvl+=addFloor;
 	}
-	public static void subFLoorLevel(int subFloor){
-		floorLvl-=subFloor;
+	public static void subWorldLevel(int subFloor){
+		worldLvl-=subFloor;
+	}
+	public static void updateWorld(int num){
+		if(num==2){
+			worldLvl++;
+			floorNum=0;
+			worldName=worlds[worldLvl];
+		}
 	}
 }
