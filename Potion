@@ -1,14 +1,15 @@
 package Gamemode;
 public class Potion extends Equipment{
 	static String mod,name;
-	static int val,amount;
+	static int val,amount,id;
 	static Equipment potion;
-	public Potion(String newMod, String newName, String newSecond, String newPotions, int newValue, int newDmg) {
-		super(null, null, newPotions, newValue, newDmg);
+	public Potion(String newMod, String newName, String newSecond, String newPotions, int newValue, int newDmg,int newId) {
+		super(null, null, newPotions, newValue, newDmg, newId);
 		mod=newMod;
 		name=newPotions;
 		val=newValue;
 		amount=newDmg;
+		id=newId;
 	}
 	public static String getMod(){
 		return mod;
@@ -39,5 +40,11 @@ public class Potion extends Equipment{
 	}
 	public static void setPotion(Equipment newPotion){
 		potion=newPotion;
+	}
+	public static int getId(){
+		return id;
+	}
+	public static void setId(int newId){
+		id=newId;
 	}
 }
