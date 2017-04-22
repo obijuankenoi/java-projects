@@ -1,5 +1,4 @@
 package Gamemode;
-
 public class Weapon extends Equipment{
 	static String name,mod;
 	static int value,dmg;
