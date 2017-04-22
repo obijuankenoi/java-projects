@@ -22,6 +22,7 @@ public class RPG {
 		 * keep defending for damage boost
 		 * add wizards can heal
 		 * spellbooks increase dmg and heal
+		 * every world adds health
 		 */
 		int fTime=0;
 		boolean inShop=false;
@@ -32,7 +33,7 @@ public class RPG {
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");	
 		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
-		//gameMusic.startMusic();
+		gameMusic.startMusic();
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
 		println("Why hello there young traveller.\n\nI am Radulfus.\n\nRadulfus: I see your name is "+Player.getName()+", is that right?");
 		Player.validChk(scan.next());	
