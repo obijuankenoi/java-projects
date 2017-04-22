@@ -1,5 +1,4 @@
 package Gamemode;
-
 public class Secondary extends Equipment {
 	static String mod,sec;
 	static int val,amount;
