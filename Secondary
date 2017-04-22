@@ -1,14 +1,15 @@
 package Gamemode;
 public class Secondary extends Equipment {
 	static String mod,sec;
-	static int val,amount;
+	static int val,amount,id;
 	static Equipment second;
-	public Secondary(String newMod, String newName, String newPotions, int newValue, int newAmount) {
-		super(newMod, newName, null, newValue, newAmount);
+	public Secondary(String newMod, String newName, String newPotions, int newValue, int newAmount,int newId) {
+		super(newMod, newName, null, newValue, newAmount,newId);
 		mod=newMod;
 		sec=newName;
 		val=newValue;
 		amount=newAmount;
+		id=newId;
 	}
 	public static Equipment getSecond(){
 		return second;
@@ -39,5 +40,11 @@ public class Secondary extends Equipment {
 	}
 	public static void setAmount(int newAmount){
 		amount=newAmount;
+	}
+	public static int getId(){
+		return id;
+	}
+	public static void setId(int newId){
+		id=newId;
 	}
 	}
