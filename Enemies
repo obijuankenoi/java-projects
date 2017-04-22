@@ -6,7 +6,6 @@ public class Enemies {
 	static String eName="",death,bName="";
 	static String[] enemy={"Bandit","Assassin","Trained Assassin","Troll","Spider","Goblin","Gnome","Giant Rat","Mercenary","Rogue Assassin","Snake","Deserter","Dwarf","Zombie","Scorpion","Imp"};
 	static String[] boss={"Hydra","Dragon","Dwarf King","Basilisk","Giant Mole","King Black Dragon","Queen Black Dragon",};
-	
 	public static void encounter(){
 		eName=enemy[gen.nextInt(enemy.length)];
 		RPG.spacer();
