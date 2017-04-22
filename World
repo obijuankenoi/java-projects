@@ -1,8 +1,7 @@
 package Gamemode;
-
 public class World {
 	static String worldName;
-	static String worlds[]={"Forest","Woods"};
+	static String worlds[]={"Forest","Woods","Jungle "};
 	static int floorNum=0,worldLvl=0;
 	public static void genWorld(){
 		worldName=worlds[0];
