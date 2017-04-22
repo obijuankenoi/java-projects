@@ -1,0 +1,43 @@
+package Gamemode;
+public class Armor extends Equipment{
+	static String mod,name;
+	static int val,dmg;
+	static Equipment armor;
+	public Armor(String newMod, String newName, String newPotions, int newValue, int newDmg) {
+		super(newMod, newName, null, newValue, newDmg);
+		mod=newMod;
+		name=newName;
+		val=newValue;
+		dmg=newDmg;
+	}
+	public static String getMod(){
+		return mod;
+	}
+	public static void setMod(String newMod){
+		mod=newMod;
+	}
+	public static String getName(){
+		return name;
+	}
+	public static void setName(String newName){
+		name=newName;
+	}
+	public static int getVal(){
+		return val;
+	}
+	public static void setVal(int newVal){
+		val=newVal;
+	}
+	public static int getDef(){
+		return dmg;
+	}
+	public static void setDef(int newDef){
+		dmg=newDef;
+	}
+	public static Equipment getArmor(){
+		return armor;
+	}
+	public static void setArmor(Equipment equip){
+		armor=equip;
+	}
+}
