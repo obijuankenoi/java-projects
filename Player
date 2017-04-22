@@ -3,8 +3,7 @@ import java.util.Scanner;
 import java.util.Random;
 public class Player
 {
-	int constant=0;
-	static int counter=0,numResponse,pClass,roll=0,pAttack=0;
+	static int counter=0,numResponse,pClass,roll=0,pAttack=0,ammo=0;
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
 	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName,shieldMod,quiverMod,spellBookMod;
@@ -61,6 +60,16 @@ public class Player
 		numResponse=scan.nextInt();
 		}
 		}while(numResponse<1||numResponse>3);
+	}
+	public static void validShopChk(int newNumResponse){
+		numResponse=newNumResponse;
+		do{
+		if(numResponse<1||numResponse>4){
+		System.out.println(numResponse+" is not a valid answer.");
+		System.out.println("please try again.");
+		numResponse=scan.nextInt();
+		}
+		}while(numResponse<1||numResponse>4);
 	}
 	public static void validChk(String newResponse){
 		response=newResponse;
@@ -154,5 +163,17 @@ public class Player
 	public static int Block(){
 		block=gen.nextInt(10)+1;
 		return block;
+	}
+	public static int getAmmo(){
+		return ammo;
+	}
+	public static void setAmmo(int newAmmo){
+		ammo=newAmmo;
+	}
+	public static void addAmmo(int newAmmo){
+		ammo+=newAmmo;
+	}
+	public static void subAmmo(int newAmmo){
+		ammo-=newAmmo;
 	}
 }
