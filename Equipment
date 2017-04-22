@@ -4,7 +4,7 @@ public class Equipment {
 	static Random gen=new Random();
 	private static int dmg,value;
 	private static String mod,name,potion,desc;
-	public Equipment(String newMod,String newName,String newSecond,String newPotions, int newValue,int newDmg){
+	public Equipment(String newMod,String newName,String newPotions, int newValue,int newDmg){
 		mod=newMod;
 		name=newName;
 		potion=newPotions;
