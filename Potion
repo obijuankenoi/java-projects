@@ -5,7 +5,7 @@ public class Potion extends Equipment{
 	static int val,amount;
 	static Equipment potion;
 	public Potion(String newMod, String newName, String newSecond, String newPotions, int newValue, int newDmg) {
-		super(null, null, null, newPotions, newValue, newDmg);
+		super(null, null, newPotions, newValue, newDmg);
 		mod=newMod;
 		name=newPotions;
 		val=newValue;
