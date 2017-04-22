@@ -2,20 +2,20 @@ package Gamemode;
 import java.util.Scanner;
 public class playerInventory {
 	static Scanner scan=new Scanner(System.in);
-	static int id=0,maxRows=10,maxColums=10,value,dmg,counter=0,total=0;
+	static int id=0,maxItems=10,value,dmg,counter=0,total=0,numResponse;
 	static String mod,name,potion,response;
-	static String[] fullName;
-	static String[] itemName;
-	static String uiInv[][]=new String [maxRows][maxColums];
+	static String fullName,itemName,temp;	
+	static String uiInv[]=new String [maxItems];
 	static Equipment pInv[]=new Equipment[uiInv.length];
+	static Potion pBag[]=new Potion[maxItems];
 	public static int getInvSize(){
 		for(int row=0;row<uiInv.length;row++)
-		total=maxRows*maxColums;
+		total=maxItems;
 		return total;
 	}
-	public static void setInvSize(int newRow,int newCol){
-		maxRows=newRow;
-		maxColums=newCol;
+	public static void setInvSize(int newAmount){
+		maxItems=newAmount;
+		
 	}
 	public static void addPInv(Equipment equip){
 		for(counter=0;counter<pInv.length;counter++){
@@ -27,14 +27,13 @@ public class playerInventory {
 	}
 	public static void addUIInv(String newMod,String newName){
 		for(counter=0;counter<uiInv.length;counter++){
-			for(counter=0;counter<uiInv.length;counter++){
-				if(uiInv[counter]==null){
-					fullName=newMod+" "+newName;
+			
+			if(uiInv[counter]==null){
+					fullName=counter+". "+newMod+" "+newName;
 					uiInv[counter]=fullName;
 					break;
 				}
-			}
-			if(counter==20){
+				else if(counter==10){
 				System.out.println("Your inventory is full, would you like to drop an item?");
 				response=scan.next();
 				if(!response.equals("yes")&&!response.equals("no")){
@@ -44,7 +43,10 @@ public class playerInventory {
 				}
 				else if(response.equals("yes")){
 					System.out.println("Which item do you want to drop?");
-					response=scan.next();
+					numResponse=scan.nextInt();
+					temp=uiInv[numResponse];
+					dropItem(numResponse);
+					System.out.println("Item Droped: "+temp);
 				}
 				else if(response.equals("no")){
 					
@@ -52,15 +54,23 @@ public class playerInventory {
 			}
 		}
 	}
-	public static String[] getInv(){
-		for(int i=0;i<uiInv.length;i++)
-			itemName=uiInv[i];
-		return itemName;
+	public static void getInv(){
+		for(String word : uiInv){
+			System.out.println(word);
+		}
+	}
+	public static void dropItem(int num){
+		uiInv[num]=null;
 	}
 	public static void clearInv(){
 		for(counter=0;counter<=pInv.length-1;counter++){
 			pInv[counter]=null;
 			uiInv[counter]=null;
+		}
+	}
+	public static void getPotionBag(){
+		for(Potion word: pBag){
+			System.out.println(word);
 		}
 	}
 }
