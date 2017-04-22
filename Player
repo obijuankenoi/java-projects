@@ -7,8 +7,8 @@ public class Player
 	static int counter=0,numResponse,pClass,roll=0,pAttack=0;
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
-	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName;
-    public static int health=100,defense=0,coins=0,val,dmg;
+	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName,shieldMod,quiverMod,spellBookMod;
+    public static int health=100,defense=0,coins=0,weapVal,shieldVal,dmg,block=0,shieldAmount=0,quiverVal,quiverDmg,spellBookDmg,spellBookVal;
 	public Equipment[] secondary,inv;
 	public static Equipment invSize[]=new Equipment[30];
 	static String weapon;
@@ -49,7 +49,7 @@ public class Player
 	public static void setWeap(String newMod,String newName, int newVal,int newDmg){
 		mod=newMod;
 		weapName=newName;
-		val=newVal;
+		weapVal=newVal;
 		dmg=newDmg;
 	}
 	public static void validNumChk(int newNumResponse){
@@ -97,20 +97,30 @@ public class Player
 	public static String getShield(){
 		return shield;
 	}
-	public static void setShield(String newShield){
-		shield=newShield;
+	public static void setShield(String newMod, String newName, int newVal, int newDmg){
+		shieldMod=newMod;
+		shield=newName;
+		shieldVal=newVal;
+		defense+=newDmg;
+		shieldAmount=newDmg;
 	}
 	public static String getQuiver(){
 		return quiver;
 	}
-	public static void setQuiver(String newQuiver){
-		quiver=newQuiver;
+	public static void setQuiver(String newMod,String newName,int newVal,int newDmg){
+		quiver=newName;
+		quiverMod=newMod;
+		quiverVal=newVal;
+		quiverDmg=newDmg;
 	}
 	public static String getSpellBook(){
 		return spellBook;
 	}
-	public static void setSpellBook(String newSpellBook){
-		spellBook=newSpellBook;
+	public static void setSpellBook(String newMod, String newName,int newVal, int newDmg){
+		spellBook=newName;
+		spellBookMod=newMod;
+		spellBookVal=newVal;
+		spellBookDmg=newDmg;
 	}
 	public static int Attack(){
 		pAttack=gen.nextInt(dmg)+dmg/2;
@@ -137,5 +147,12 @@ public class Player
 	}
 	public static void setDmg(int newDmg){
 		dmg=newDmg;
+	}
+	public static int getBlock(){
+		return block;
+	}
+	public static int Block(){
+		block=gen.nextInt(10)+1;
+		return block;
 	}
 }
