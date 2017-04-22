@@ -1,5 +1,4 @@
 package Gamemode;
-
 public class Potion extends Equipment{
 	static String mod,name;
 	static int val,amount;
