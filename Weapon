@@ -5,7 +5,7 @@ public class Weapon extends Equipment{
 	static int value,dmg;
 	static Equipment weap;
 	public Weapon(String mods, String newName, int newValue, int newDmg) {
-		super(mods, newName, null, null, newValue, newDmg);
+		super(mods, newName, null, newValue, newDmg);
 		mod=mods;
 		name=newName;
 		value=newValue;
