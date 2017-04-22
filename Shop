@@ -1,18 +1,22 @@
 package Gamemode;
-
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 public class Shop  {
+	static Scanner scan=new Scanner(System.in);
+	static Random gen=new Random();
+	static int arrows=0;
 	//Warrior
 	static String[] swords={"Wooden Sword","Stone Sword","Bronze Sword","Iron Sword","Steel Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
 	static String[] shields={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield"};
-	static String[] heavyArmor={"Wooden Armor","Stone Armor","Chainmail Armor","Iron Armor","Gold Armor"};
+	static String[] heavyArmor={"Wooden Armour","Stone Armour","Chainmail Armour","Iron Armour","Gold Armour"};
 	//Ranger
 	static String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
 	static String[] quivers={"Two-Point Arrow Quiver","Serrated Arrow Quiver","Sharktooth Arrow Quiver","Blunt Arrow Quiver","Fire Arrow Quiver","Fire Arrow Quiver","Broadhead Arrow Quiver","Penetrating Arrow Quiver","Spike-Point Arrow Quiver"};
 	static String[] mediumArmor={"Soft Leather Armor","Leather Armor","Hard Leather Armor","Studded Leather Armor"};
 	//Wizard
 	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
-	static String[] spellBook={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	static String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
 	static String[] lightArmor={"Cloth Armor","Wizard Robes","Spider Silk Robes","Combat Robes","Skeletal Armor"};
 	//All
 	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
@@ -30,9 +34,7 @@ public class Shop  {
 		}
 	}
 	}
-	
 	public static void genWeap(int clss){
-		Random gen=new Random();
 		int roll=1;
 		if(roll<=2){
 			switch(clss){
@@ -64,7 +66,6 @@ public class Shop  {
 		}
 	}
 	public static void genSec(int clss){
-		Random gen=new Random();
 		switch(clss){
 		case(1) :{
 			Secondary shield1=new Secondary(mods[gen.nextInt(mods.length-1)+1],shields[gen.nextInt(shields.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
@@ -77,14 +78,13 @@ public class Shop  {
 			break;
 		}
 		case(3) :{
-			Secondary spellBook1=new Secondary(mods[gen.nextInt(mods.length-1)+1],spellBook[gen.nextInt(spellBook.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
+			Secondary spellBook1=new Secondary(mods[gen.nextInt(mods.length-1)+1],spellBooks[gen.nextInt(spellBooks.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
 			Secondary.setSecond(spellBook1);
 			break;
 		}
 		}
 	}
 	public static void genPotion(int clss){
-		Random gen=new Random();
 		switch(clss){
 		case(1) :{
 			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10), gen.nextInt(10));
@@ -103,8 +103,61 @@ public class Shop  {
 		}
 		}
 	}
-	public static void shopDisplay(String mods,String name,String second,String potions){
-		
+	public static void genArmor(int clss){
+		switch(clss){
+		case(1) :{	
+			Armor hArmor1=new Armor(mods[gen.nextInt(mods.length-1)], heavyArmor[gen.nextInt(heavyArmor.length-1)+1], null, gen.nextInt(10)+1, gen.nextInt(10)+1);
+			Armor.setArmor(hArmor1);
+			break;
+		}
+		case(2) :{
+			Armor mArmor1=new Armor(mods[gen.nextInt(mods.length-1)+1],mediumArmor[gen.nextInt(mediumArmor.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
+			Armor.setArmor(mArmor1);
+			break;
+		}
+		case(3) :{
+			Armor lArmor1=new Armor(mods[gen.nextInt(mods.length-1)+1],lightArmor[gen.nextInt(lightArmor.length-1)+1],null,gen.nextInt(10),gen.nextInt(10));
+			Armor.setArmor(lArmor1);
+			break;
+		}
+		}
+	}
+	public static void shopDisplay(int num){
+		System.out.println("Would you like to buy a weapon, secondary, armour, or potions?");
+		Player.validShopChk(scan.nextInt());
+		switch(Player.getNumResponse()){
+		case(1) :{
+			System.out.println("Heres what I got: \n");
+			genWeap(num);
+			RPG.spacer();
+			System.out.println("\nWeapon: "+Weapon.getMod()+" "+Weapon.getName());
+			System.out.println("\nWhich one do you want to buy?");
+			break;
+		}
+		case(2) :{
+			genSec(num);
+			RPG.spacer();
+			System.out.println("\nSecondaries: "+Secondary.getMod()+" "+Secondary.getName());
+			System.out.println("\nWhich one do you want to buy?");
+			break;
+		}
+		case(3) :{
+			genArmor(num);
+			RPG.spacer();
+			System.out.println("\nArmors: "+Armor.getMod()+" "+Armor.getName());
+			System.out.println("\nWhich one do you want to buy?");
+			break;
+		}
+		case(4) :{
+			genPotion(num);
+			RPG.spacer();
+			System.out.println("\nPotions: "+Potion.getPotionName());
+			System.out.println("\nWhich one do you want to buy?");
+			break;
+		}
+		}		
+		RPG.spacer();
+		System.out.println("\n");
 	}
 	public static void defaultWeap(int clss){
 		switch(clss){
@@ -131,7 +184,7 @@ public class Shop  {
 			Player.setQuiver(mods[0],quivers[0],5,10);
 		}
 		case(3) :{
-			Player.setSpellBook(mods[0],spellBook[0],5,10);
+			Player.setSpellBook(mods[0],spellBooks[0],5,10);
 		}
 		}
 	}
