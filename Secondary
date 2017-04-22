@@ -5,7 +5,7 @@ public class Secondary extends Equipment {
 	static int val,amount;
 	static Equipment second;
 	public Secondary(String newMod, String newName, String newPotions, int newValue, int newAmount) {
-		super(newMod, newName, null, null, newValue, newAmount);
+		super(newMod, newName, null, newValue, newAmount);
 		mod=newMod;
 		sec=newName;
 		val=newValue;
