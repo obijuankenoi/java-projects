@@ -20,15 +20,21 @@ public class RPG {
 		 * smack with bow if player had no arrows
 		 * add stats(Strength, Defense)
 		 * item roll for stats
-		 * make 2-D Array for inventory
+		 * keep defending for damage boost
 		 */
 		int fTime=0;
 		boolean inShop=false;
 		ArrayList<Equipment> shop=new ArrayList<Equipment>();
 		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
-		// playerInventory.clearInv();
+		playerInventory.clearInv();
 		World.genWorld();
-		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");
+		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n");
+		println("Before you start, would you like to play with music?");
+		Player.validChk(scan.next());
+		if(Player.getResponse().equals("yes")){
+			gameMusic.startMusic();
+			println("\n\n\n");
+		}
 		println("Welcome stranger what is thy name?");
 		Player.setName(scan.next());
 		Player.setName(Player.getName().substring(0, 1).toUpperCase()+Player.getName().substring(1));
@@ -61,9 +67,8 @@ public class RPG {
 			spacer();
 				Shop.defaultWeap(Player.getPClass());
 				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName());
+				playerInventory.addUIInv(Player.getMod(), Player.getWeapName());
 			spacer();
-			//playerInventory.addUIInv("Broekn", "Sword");
-			//playerInventory.addUIInv("Broek", "Bow");
 			println("\n\n"+rad+"that "+Player.getWeapName()+" was my fathers before he died fighting the dwarf king.\n");
 		}
 		else if(Player.getNumResponse()==2){
@@ -71,6 +76,7 @@ public class RPG {
 			spacer();
 			Shop.defaultWeap(Player.getPClass());
 				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName()+"**");
+				playerInventory.addUIInv(Player.getMod(), Player.getWeapName());
 			spacer();
 			println("\n\n"+rad+"I would go hunting as a boy with that "+Player.getWeapName()+".\n");
 		}
@@ -79,6 +85,7 @@ public class RPG {
 			spacer();
 			Shop.defaultWeap(Player.getPClass());
 				println("\n**Item recieved: "+Player.getMod()+" "+Player.getWeapName()+"**");
+				playerInventory.addUIInv(Player.getMod(), Player.getWeapName());
 			spacer();
 			println("\n\n"+rad+"I could never figure out how to use that stick.\n");
 		}
@@ -89,15 +96,13 @@ public class RPG {
 			Player.validNumChk(scan.nextInt());
 			if(Player.getNumResponse()==2){
 				spacer();
-					println("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is "
-							+ "setting.\nYou can only choose to go in one house, do you go in the left or right one?**");
+					println("\n**You walk outside to look for more houses.\nYou find two more houses, but the sun is setting.\nYou can only choose to go in one house, do you go in the left or right one?**");
 				spacer();
 				print("\n");
 				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
 					spacer();
-					println("\nYou go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth"
-							+ " on a table.\nDo you take it or leave?");
+					println("\nYou go into the left house.\nThe owner seems to be away, but there is something wrapped in cloth on a table.\nDo you take it or leave?");
 					spacer();
 					print("\n");
 					Player.validNumChk(scan.nextInt());
@@ -108,6 +113,7 @@ public class RPG {
 							println("\nYou pick up the item, inside is: "+Player.getShield()+".\n");
 							spacer();
 								println("\n**Item recieved: "+Player.getShield()+".**");
+								playerInventory.addUIInv(null,Player.getShield());
 							spacer();
 							println("\n");
 						}
@@ -116,6 +122,7 @@ public class RPG {
 							println("You pick up the item, inside is: "+Player.getQuiver()+".\n");
 							spacer();
 								println("\n**Item recieved: "+Player.getQuiver()+".**");
+								playerInventory.addUIInv(null, Player.getQuiver());
 							spacer();
 							println("\n");
 						}
@@ -125,6 +132,7 @@ public class RPG {
 							println("\nYou pick up the item, inside is: "+Player.getSpellBook()+".\n");
 							spacer();
 								println("\n**Item recieved: "+Player.getSpellBook()+".**");
+								playerInventory.addUIInv(null,Player.getSpellBook());
 							spacer();
 							print("\n");
 						}
@@ -181,6 +189,7 @@ public class RPG {
 						print("\n");
 						Enemies.setHealth(100);
 						World.addFloorNum(1);
+						World.updateWorld(World.getFloorNum());
 						break;
 					}
 					}while(Enemies.getHealth()>0||Player.getHealth()>0);
@@ -256,7 +265,7 @@ public class RPG {
 		case(1) :{
 			Enemies.subHealth(Player.Attack());
 			Player.subHealth(Enemies.Attack());
-			if(Player.getHealth()>1&&Player.getDmg()>0){	
+			if(Player.getHealth()>0&&Player.getDmg()>0){	
 			spacer();
 			println("\nYou deal: "+Player.getDmg()+" Damage!\n");
 			}
@@ -264,7 +273,7 @@ public class RPG {
 				spacer();
 				println("You Missed!\n");
 			}
-			if(Enemies.getHealth()>1&&Enemies.getDmg()>0){
+			if(Enemies.getHealth()>0&&Enemies.getDmg()>0){
 				if(Player.getHealth()<=0){
 					spacer();
 					print("\n");
@@ -280,15 +289,33 @@ public class RPG {
 			break;
 		}
 		case(2) :{
-			println("Defend\n");
-			if(Enemies.getHealth()>1){
 			Player.subHealth(Enemies.Attack());
+			Player.Block();
+			if(Enemies.getHealth()>1&&Player.getHealth()>1&&Enemies.getDmg()>Player.getBlock()){
+			Player.addHealth(Player.getBlock());
+			spacer();
+			println("\n"+Player.getName()+" blocked: "+Player.getBlock()+" Damage!");
 			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
+			spacer();
+			
+			}
+			else if(Player.getBlock()>Enemies.getDmg()){
+				Player.addHealth(Enemies.getDmg());
+				spacer();
+				println("\nYou cancelled the attack!");
+				spacer();
+			}
+			else if(Player.getBlock()==Enemies.getDmg()){
+				Player.addHealth(Enemies.getDmg());
+				spacer();
+				println("\nBoth attacks were cancelled!");
+				spacer();
 			}
 			break;
 		}
 		case(3) :{
-			println("You open your inventory!\n");
+			println("You open your bag!\n");
+			Player.addHealth(100);
 			break;
 		}
 		case(4) :{
@@ -314,6 +341,6 @@ public class RPG {
 		}
 	}
 	public static String getWorldInfo(){
-		return World.getWorld()+".\nFloor: "+World.getFloorLevel()+" Level: "+World.getFloorNum();
+		return World.getWorld()+".\nWorld: "+World.getWorldLevel()+" Level: "+World.getFloorNum();
 	}
 }
