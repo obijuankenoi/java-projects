@@ -2,11 +2,20 @@ package Gamemode;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
-public class RPG {
+public class RPG implements Runnable{
+	private Display display;
 	static Random gen=new Random();
 	static Scanner scan=new Scanner(System.in);
 	static String rad="Radulfus: ", geo="Geofridus";
 	static String[] space=new String[20];
+	public int width,height;
+	private Thread thread;
+	private boolean running=false;
+	public RPG(String title,int width,int height){
+		this.width=width;
+		this.height=height;
+		display=new Display(title,width,height);
+	}
 	public static void main(String[] args){
 		/* BrainStrom:
 		 * if no spell book, wand is a melee weapon
@@ -331,5 +340,33 @@ public class RPG {
 	}
 	public static String getWorldInfo(){
 		return World.getWorld()+".\nWorld: "+World.getWorldLevel()+" Level: "+World.getFloorNum();
+	}
+	private void init(){
+		
+	}
+	private void tick(){
+		
+	}
+	private void render(){
+		
+	}
+	public void run(){
+		init();
+		while(running){
+			tick();
+			render();
+		}
+		stop();
+	}
+	public synchronized void start(){
+		thread=new Thread(this);
+		thread.start();
+	}
+	public synchronized void stop(){
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
