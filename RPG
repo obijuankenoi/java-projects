@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 public class RPG implements Runnable{
-	private Display display;
+	//private Display display;
 	static Random gen=new Random();
 	static Scanner scan=new Scanner(System.in);
 	static String rad="Radulfus: ", geo="Geofridus";
@@ -214,9 +214,11 @@ public class RPG implements Runnable{
 							println("What can I do ya for?\nBuying=1, Selling=2");
 							Player.setNumResponse(scan.nextInt());
 							Player.validNumChk(Player.getNumResponse());
-							 if(Player.getNumResponse()==1){								 
+							 if(Player.getNumResponse()==1){		
+								 do{
 									 Shop.shopDisplay(Player.getPClass());
-									
+									 Player.validChk(scan.next());
+								 }while(Player.getResponse().equals("yes"));
 									 Player.setNumResponse(scan.nextInt());
 									 println(shop.get(Player.getNumResponse()).getName()+" costs "+shop.get(Player.getNumResponse()).getValue()+
 											 " Coins.\nYou have "+Player.getCoins()+" Coins." );
@@ -348,15 +350,15 @@ public class RPG implements Runnable{
 		return World.getWorld()+".\nWorld: "+World.getWorldLevel()+" Level: "+World.getFloorNum();
 	}
 	private void init(){
-		display=new Display(title,width,height);
+		//display=new Display(title,width,height);
 	}
 	private void tick(){
 		
 	}
 	private void render(){
-		bs=Display.getCanvas().getBufferStrategy();
+		//bs=Display.getCanvas().getBufferStrategy();
 		if(bs==null){
-			Display.getCanvas().createBufferStrategy(3);
+			//Display.getCanvas().createBufferStrategy(3);
 			return;
 		}
 		g=bs.getDrawGraphics();
