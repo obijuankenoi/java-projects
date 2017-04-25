@@ -71,6 +71,16 @@ public class Player
 		}
 		}while(numResponse<1||numResponse>4);
 	}
+	public static void validBuyChk(int newNumResponse){
+		numResponse=newNumResponse;
+		do{
+		if(numResponse<1||numResponse>9){
+		System.out.println(numResponse+" is not a valid answer.");
+		System.out.println("please try again.");
+		numResponse=scan.nextInt();
+		}
+		}while(numResponse<1||numResponse>9);
+	}
 	public static void validChk(String newResponse){
 		response=newResponse;
 		do{
