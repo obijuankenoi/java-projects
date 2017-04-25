@@ -27,7 +27,8 @@ public class Shop  {
 	static Secondary[] shopSec=new Secondary[10];
 	static Armor[] shopArm=new Armor[10];
 	static Potion[] shopPos=new Potion[10];
-	static String[] shopItems=new String[10];
+	static String[] shopItemNames=new String[10];
+	static String[] shopItemMods=new String[10];
 	public static void shopItems(int clss){
 		switch(clss){
 		case(1) :{
@@ -135,7 +136,6 @@ public class Shop  {
 		switch(Player.getNumResponse()){
 		case(1) :{
 			System.out.println("Heres what I got: \n");
-			
 			RPG.spacer();
 			System.out.println("\n");
 			for(int i=0;i<10;i++){
@@ -143,46 +143,95 @@ public class Shop  {
 				shopWeap[i]=Weapon.getWeap();
 				value=Weapon.getValue();
 				dmg=Weapon.getDmg();
-			shopItems[i]=Weapon.getMod()+" "+Weapon.getName();
-				System.out.println(i+". "+"Weapon: "+shopItems[i]+"\tValue: "+value+"\tDamage: "+dmg);
+			shopItemMods[i]=Weapon.getMod();
+			shopItemNames[i]=Weapon.getName();
+				System.out.println(i+". Weapon: "+shopItemMods[i]+" "+shopItemNames[i]+"\t  Value: "+value+"\t  Damage: "+dmg);
 			}
 			System.out.print("\n");
 			RPG.spacer();
 			System.out.println("\nWhich one do you want to buy?");
-			Player.setNumResponse(scan.nextInt());
+			Player.validBuyChk(scan.nextInt());
 			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
 			RPG.spacer();
-			System.out.println("\nItem Bought: "+shopItems[Player.getNumResponse()]);
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
 			break;
 		}
+
 		case(2) :{
-			genSec(num);
+			System.out.println("Heres what I got: \n");
 			RPG.spacer();
+			System.out.println("\n");
 			for(int i=0;i<10;i++){
-			System.out.println("\nSecondary: "+i+". "+Secondary.getMod()+" "+Secondary.getName());
-			genSec(num);
+				genSec(num);
+				shopWeap[i]=Secondary.getSecond();
+				value=Secondary.getVal();
+				dmg=Secondary.getAmount();
+				shopItemMods[i]=Secondary.getMod();
+				shopItemNames[i]=Secondary.getSec();
+				System.out.println(i+". Secondary: "+shopItemMods[i]+" "+shopItemNames[i]+"\t  Value: "+value+"\t  Amount: "+dmg);
 			}
+			System.out.println("\n");
+			RPG.spacer();
 			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
 			break;
 		}
 		case(3) :{
-			genArmor(num);
-			RPG.spacer();
+			System.out.println("Heres what I got: \n");		
+ 			RPG.spacer();
+ 			System.out.println("\n");
 			for(int i=0;i<10;i++){
-			System.out.println("\nArmour: "+i+". "+Armor.getMod()+" "+Armor.getName());
-			genArmor(num);
+				genArmor(num);
+				shopWeap[i]=Armor.getArmor();
+				value=Armor.getVal();
+				dmg=Armor.getDef();
+				shopItemMods[i]=Armor.getMod();
+				shopItemNames[i]=Armor.getName();
+			System.out.println(i+". Armor: "+shopItemMods[i]+" "+shopItemNames[i]);
 			}
+			System.out.println("\n");
+			RPG.spacer();
 			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
 			break;
 		}
 		case(4) :{
-			genPotion(num);
+			System.out.println("Heres what I got: \n");
 			RPG.spacer();
+			System.out.println("\n");
 			for(int i=0;i<10;i++){
-			System.out.println("\nPotion: "+i+". "+Potion.getPotionName());
 			genPotion(num);
+			shopWeap[i]=Potion.getPotion();
+			value=Potion.getValue();
+			dmg=Potion.getPotionAmount();
+			shopItemNames[i]=Potion.getPotionName();
+			System.out.println(i+". Potion: "+shopItemNames[i]);
 			}
+			System.out.println("\n");
+			RPG.spacer();
 			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv("", shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something?");
 			break;
 		}
 		}		
