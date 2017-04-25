@@ -6,6 +6,7 @@ public class Shop  {
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
 	static int arrows=0;
+	static int value,dmg;
 	//Warrior
 	static String[] swords={"Wooden Sword","Stone Sword","Bronze Sword","Iron Sword","Steel Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
 	static String[] shields={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield"};
@@ -21,6 +22,12 @@ public class Shop  {
 	//All
 	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
 	static String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
+	//Shop
+	static Equipment[] shopWeap=new Equipment[10];
+	static Secondary[] shopSec=new Secondary[10];
+	static Armor[] shopArm=new Armor[10];
+	static Potion[] shopPos=new Potion[10];
+	static String[] shopItems=new String[10];
 	public static void shopItems(int clss){
 		switch(clss){
 		case(1) :{
@@ -128,30 +135,53 @@ public class Shop  {
 		switch(Player.getNumResponse()){
 		case(1) :{
 			System.out.println("Heres what I got: \n");
-			genWeap(num);
+			
 			RPG.spacer();
-			System.out.println("\nWeapon: "+Weapon.getMod()+" "+Weapon.getName());
+			System.out.println("\n");
+			for(int i=0;i<10;i++){
+				genWeap(num);
+				shopWeap[i]=Weapon.getWeap();
+				value=Weapon.getValue();
+				dmg=Weapon.getDmg();
+			shopItems[i]=Weapon.getMod()+" "+Weapon.getName();
+				System.out.println(i+". "+"Weapon: "+shopItems[i]+"\tValue: "+value+"\tDamage: "+dmg);
+			}
+			System.out.print("\n");
+			RPG.spacer();
 			System.out.println("\nWhich one do you want to buy?");
+			Player.setNumResponse(scan.nextInt());
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItems[Player.getNumResponse()]);
 			break;
 		}
 		case(2) :{
 			genSec(num);
 			RPG.spacer();
-			System.out.println("\nSecondaries: "+Secondary.getMod()+" "+Secondary.getName());
+			for(int i=0;i<10;i++){
+			System.out.println("\nSecondary: "+i+". "+Secondary.getMod()+" "+Secondary.getName());
+			genSec(num);
+			}
 			System.out.println("\nWhich one do you want to buy?");
 			break;
 		}
 		case(3) :{
 			genArmor(num);
 			RPG.spacer();
-			System.out.println("\nArmors: "+Armor.getMod()+" "+Armor.getName());
+			for(int i=0;i<10;i++){
+			System.out.println("\nArmour: "+i+". "+Armor.getMod()+" "+Armor.getName());
+			genArmor(num);
+			}
 			System.out.println("\nWhich one do you want to buy?");
 			break;
 		}
 		case(4) :{
 			genPotion(num);
 			RPG.spacer();
-			System.out.println("\nPotions: "+Potion.getPotionName());
+			for(int i=0;i<10;i++){
+			System.out.println("\nPotion: "+i+". "+Potion.getPotionName());
+			genPotion(num);
+			}
 			System.out.println("\nWhich one do you want to buy?");
 			break;
 		}
