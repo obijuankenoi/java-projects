@@ -1,33 +1,16 @@
 package Gamemode;
 import java.util.Scanner;
 import java.util.Random;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-public class RPG implements Runnable{
+public class RPG{
 	//private Display display;
 	static Random gen=new Random();
 	static Scanner scan=new Scanner(System.in);
 	static String rad="Radulfus: ", geo="Geofridus";
 	static String[] space=new String[20];
-	public int width,height;
-	private Thread thread;
-	public String title;
-	private boolean running=false;
-	private BufferStrategy bs;
-	private Graphics g;
-	public RPG(String title,int width,int height){
-		this.width=width;
-		this.height=height;
-		this.title=title;
-	}
 	public static void main(String[] args){
 		/* BrainStrom:
 		 * if no spell book, wand is a melee weapon
-		 * figure out the welcome back text for shop
 		 * create a range for each modifier
-		 * add items to player inventory and shop*
 		 * add rewards for killing enemies
 		 * add coin loss for death
 		 * switch statement to set chances of weapons
@@ -41,8 +24,6 @@ public class RPG implements Runnable{
 		 */
 		int fTime=0;
 		boolean inShop=false;
-		ArrayList<Equipment> shop=new ArrayList<Equipment>();
-		ArrayList<Equipment> pInv=new ArrayList<Equipment>();
 		playerInventory.clearInv();
 		World.genWorld();
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");	
@@ -175,9 +156,9 @@ public class RPG implements Runnable{
 				println("\n**From here only use numbers to navigate the menu.**");
 				spacer();
 			println("\n");
+			println("\nDo you want to go into the wild or visit the shop?");
+			Player.validNumChk(scan.nextInt());
 			do{
-				println("\nDo you want to go into the wild or visit the shop?");
-				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
 					println("You go into the "+getWorldInfo()+"\n");
 					Enemies.encounter();
@@ -188,8 +169,10 @@ public class RPG implements Runnable{
 					fightScene(Player.getNumResponse());
 					if(Player.getHealth()<1){
 						println("\n"+Player.getName()+" died.");
+						println("\n"+Player.getName()+" lost: "+Player.getLostCoins());
 						spacer();
 						println("\n");
+						Player.subCoins(Player.getLo);
 						break;
 					}
 					else if(Enemies.getHealth()<1){
@@ -208,8 +191,12 @@ public class RPG implements Runnable{
 				}
 				else if(Player.getNumResponse()==2){
 					if(fTime==0){
-						inShop=true;
 						println("I see this is your first time at my shop.\nThe names "+geo+".");
+						fTime++;
+					}
+					else if(fTime>0)
+						println("Welcome back "+Player.getName()+"!");
+						inShop=true;
 						do{
 							println("What can I do ya for?\nBuying=1, Selling=2");
 							Player.setNumResponse(scan.nextInt());
@@ -217,49 +204,53 @@ public class RPG implements Runnable{
 							 if(Player.getNumResponse()==1){		
 								 do{
 									 Shop.shopDisplay(Player.getPClass());
-									 Player.validChk(scan.next());
+									 Player.validChk(scan.next());		
 								 }while(Player.getResponse().equals("yes"));
-									 Player.setNumResponse(scan.nextInt());
-									 println(shop.get(Player.getNumResponse()).getName()+" costs "+shop.get(Player.getNumResponse()).getValue()+
-											 " Coins.\nYou have "+Player.getCoins()+" Coins." );
-									 if(shop.get(Player.getNumResponse()).getValue()>Player.getCoins()){
-										 println("You dont have enough coins.");
-										 println("Would you like to buy something else or leave?");
-										 Player.setNumResponse(scan.nextInt());
-										 if(Player.getNumResponse()==2){
-											 inShop=false;
-											 break;
-										 }
-									 }
-									 else{
-										 println("Purchased: "+shop.get(Player.getNumResponse()).getName());										
-									 }								 
-							 }
-							 else if(Player.getNumResponse()==2){
-								 println("Lets see what you've got");
-								 for(int i=0;i<pInv.size();i++){
-									 println(i+". "+pInv.get(i));
-									 println("What would you like to sell?");
-									 Player.setNumResponse(scan.nextInt());
+								 if(Player.getResponse().equals("no")){
+									 inShop=false;
+									 break;
 								 }
 							 }
+							 else if(Player.getNumResponse()==2){
+								Shop.shopSellDisplay();
+								if(Player.getResponse().equals("no")){
+									inShop=false;
+									break;
+								}
+								 } 
 						}while(inShop=true);
-						if(Player.getNumResponse()==2 && inShop==false){
-							 println("You go into the wild.");
-								Enemies.encounter();
-								do{
-								println(Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
-								println("Do you Attack, Defend, Use your bag or Flee?");
-								Player.setNumResponse(scan.nextInt());
-								fightScene(Player.getNumResponse());
-								}while(Enemies.getHealth()>0||Enemies.getHealth()>0);
+						if(inShop==false){
+							println("You go into the "+getWorldInfo()+"\n");
+							Enemies.encounter();
+							do{
+							println("\n\n"+Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
+							println("Do you Attack, Defend, Open your inventory or Flee?");
+							Player.validFightChk(scan.nextInt());
+							fightScene(Player.getNumResponse());
+							if(Player.getHealth()<1){
+								println("\n"+Player.getName()+" died.");
+								spacer();
+								println("\n");
+								break;
+							}
+							else if(Enemies.getHealth()<1){
+								println(Enemies.getName()+" died.");
+								spacer();
+								println("\n"+Player.getName()+"'s loot: "+Enemies.genECoinDrop()+" Coins!");
+								spacer();
+								Player.addCoins(Enemies.getCoinDrop());
+								print("\n");
+								Enemies.setHealth(100);
+								World.addFloorNum(1);
+								World.updateWorld(World.getFloorNum());
+								break;
+							}
+							}while(Enemies.getHealth()>0||Player.getHealth()>0);
 						 }
-					}
-					else if(fTime>0){
-						println("Welcome back "+Player.getName()+".\nWhat can I do ya for?");
-					}
 				}
-			}while(Player.getResponse().equals("yes"));
+				println("\nDo you want to go into the wild or visit the shop?");
+				Player.validNumChk(scan.nextInt());
+			}while(Player.getNumResponse()==1||Player.getNumResponse()==2);
 		}
 	public static void println(String output){
 		System.out.println(output);
@@ -348,55 +339,5 @@ public class RPG implements Runnable{
 	}
 	public static String getWorldInfo(){
 		return World.getWorld()+".\nWorld: "+World.getWorldLevel()+" Level: "+World.getFloorNum();
-	}
-	private void init(){
-		//display=new Display(title,width,height);
-	}
-	private void tick(){
-		
-	}
-	private void render(){
-		//bs=Display.getCanvas().getBufferStrategy();
-		if(bs==null){
-			//Display.getCanvas().createBufferStrategy(3);
-			return;
-		}
-		g=bs.getDrawGraphics();
-		//Clear Screen
-		g.clearRect(0, 0, width, height);
-		//Draw Here!
-		g.setColor(Color.red);
-		g.fillRect(10, 50, 50, 70);
-		g.setColor(Color.green);
-		g.fillRect(0, 0, 10, 10);
-		//End Drawing!
-		bs.show();
-		g.dispose();
-	}
-	public void run(){
-		init();
-		while(running){
-			tick();
-			render();
-		}
-		stop();
-	}
-	public synchronized void start(){
-		if(running)
-			return;
-		running=true;
-		thread=new Thread(this);
-		thread.start();
-	}
-	public synchronized void stop(){
-		if(!running)
-			return;
-		running=false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
+	}	
 }
