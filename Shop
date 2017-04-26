@@ -1,5 +1,4 @@
 package Gamemode;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 public class Shop  {
@@ -130,8 +129,25 @@ public class Shop  {
 		}
 		}
 	}
+	public static void shopSellDisplay(){
+		do{
+		playerInventory.getInv();
+		System.out.println("Which item do you wish to sell?");
+		Player.validBuyChk(scan.nextInt());
+		if(Player.getNumResponse()>playerInventory.getSize()){
+			do{
+			System.out.println("That is an empty slot. Please try a different slot.");
+			Player.validBuyChk(scan.nextInt());
+			}while(Player.getNumResponse()>playerInventory.getInvSize());
+		}
+			System.out.println("Item Sold: "+playerInventory.getSingleUiItem(Player.getNumResponse()));
+			playerInventory.dropItem(Player.getNumResponse());
+			System.out.println("Would you like to sell another item?");
+			Player.validChk(scan.next());
+		}while(Player.getResponse().equals("yes"));
+	}
 	public static void shopDisplay(int num){
-		System.out.println("Would you like to buy a weapon, secondary, armour, or potions?");
+		System.out.println("Would you like to buy a weapon, secondary, armor, or potions?");
 		Player.validShopChk(scan.nextInt());
 		switch(Player.getNumResponse()){
 		case(1) :{
@@ -159,7 +175,6 @@ public class Shop  {
 			System.out.println("Do you wish to buy something else?");
 			break;
 		}
-
 		case(2) :{
 			System.out.println("Heres what I got: \n");
 			RPG.spacer();
