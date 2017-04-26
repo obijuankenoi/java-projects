@@ -74,12 +74,12 @@ public class Player
 	public static void validBuyChk(int newNumResponse){
 		numResponse=newNumResponse;
 		do{
-		if(numResponse<1||numResponse>9){
+		if(numResponse<0||numResponse>9){
 		System.out.println(numResponse+" is not a valid answer.");
 		System.out.println("please try again.");
 		numResponse=scan.nextInt();
 		}
-		}while(numResponse<1||numResponse>9);
+		}while(numResponse<0||numResponse>9);
 	}
 	public static void validChk(String newResponse){
 		response=newResponse;
@@ -185,5 +185,8 @@ public class Player
 	}
 	public static void subAmmo(int newAmmo){
 		ammo-=newAmmo;
+	}
+	public static int getLostCoins(){
+		return gen.nextInt(10)+1;
 	}
 }
