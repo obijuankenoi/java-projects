@@ -1,214 +1,302 @@
 package Gamemode;
-import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Random;
-public class Player
-{
-	static int counter=0,numResponse,pClass,roll=0,pAttack=0,ammo=0;
+import java.util.Scanner;
+public class Shop  {
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
-	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName,shieldMod,quiverMod,spellBookMod;
-    public static int health=100,defense=0,coins=0,weapVal,shieldVal,dmg,block=0,shieldAmount=0,quiverVal,quiverDmg,spellBookDmg,spellBookVal,fTime=0;
-	public Equipment[] secondary,inv;
-	static boolean inShop=false,inFight=false,start=false;
-	public static Equipment invSize[]=new Equipment[30];
-	static String weapon;
-	public Player(String newName, int newClass){
-		name=newName;
-		pClass=newClass;
-	}
-	public static int getHealth(){
-		return health;
-	}
-	public static void setHealth(int dmg){
-		health=dmg;
-	}
-	public static void addHealth(int amount){
-		health+=amount;
-	}
-	public static void subHealth(int dmg){
-		health-=dmg;
-	}
-	public static int getCoins(){
-		return coins;
-	}
-	public static void addCoins(int amount){
-		coins+=amount;
-	}
-	public static void subCoins(int amount){
-		coins-=amount;
-	}
-	public static String getName(){
-		return name;
-	}
-	public static void setName(String newName){
-		name=newName;
-	}
-	public static String getWeap(){
-		return weapon;
-	}
-	public static void setWeap(String newMod,String newName, int newVal,int newDmg){
-		mod=newMod;
-		weapName=newName;
-		weapVal=newVal;
-		dmg=newDmg;
-	}
-	public static void validNumChk(int newNumResponse){
-		numResponse=newNumResponse;
-		do{
-		if(numResponse<1||numResponse>3){
-		System.out.println(numResponse+" is not a valid answer.");
-		System.out.println("please try again.");
-		numResponse=scan.nextInt();
+	static int arrows=0;
+	static int value,dmg;
+	//Warrior
+	static String[] swords={"Wooden Sword","Stone Sword","Bronze Sword","Iron Sword","Steel Sword","Gold Sword","Halberd","BroadSword","Scimitar","Claymore","Rapier","Falchion"};
+	static String[] shields={"Wooden Shield","Stone Shield","Iron Shield","Gold Shield"};
+	static String[] heavyArmor={"Wooden Armour","Stone Armour","Chainmail Armour","Iron Armour","Gold Armour"};
+	//Ranger
+	static String[] bows={"Short Bow","Long Bow","Recurve Bow","Hunting Bow","Crossbow","Elven Short Bow","Elven Long Bow","Elven Recurve Bow","Elven Hunting Bow","Elven Crossbow"};
+	static String[] quivers={"Two-Point Arrow Quiver","Serrated Arrow Quiver","Sharktooth Arrow Quiver","Blunt Arrow Quiver","Fire Arrow Quiver","Fire Arrow Quiver","Broadhead Arrow Quiver","Penetrating Arrow Quiver","Spike-Point Arrow Quiver"};
+	static String[] mediumArmor={"Soft Leather Armor","Leather Armor","Hard Leather Armor","Studded Leather Armor"};
+	//Wizard
+	static String[] wands={"Novice Wand","Apprentice Wand","Initiate Wand","Journeyman Wand","Adept Wand", "Magus Wand","Master Wand","Grandmaster Wand","Legendary Wand"};
+	static String[] spellBooks={"Intro Spellbook","Novice Spellbook","Apprentice Spellbook","Initiate Spellbok","Journeyman Spellbook","Adept Spellbook","Magus Spellbook","Master Spellbook","Grandmaster Spellbook","Legendary Spellbook"};
+	static String[] lightArmor={"Cloth Armor","Wizard Robes","Spider Silk Robes","Combat Robes","Skeletal Armor"};
+	//All
+	static String[] mods={"Broken","Damaged","Shoddy","Unpleasent","Strong","Superior","Godly","Demonic","Ruthless","Zealous"};
+	static String[] potions={"Small Health Flask","Medium Health Flask","Large Health Flask","Small Mana Flask","Medium Mana Flask","Large Mana Flask","Small Hybrid Flask","Medium Hybrid Flask","Large Hybrid Flask"};
+	//Shop
+	static Equipment[] shopWeap=new Equipment[10];
+	static Secondary[] shopSec=new Secondary[10];
+	static Armor[] shopArm=new Armor[10];
+	static Potion[] shopPos=new Potion[10];
+	static String[] shopItemNames=new String[10];
+	static String[] shopItemMods=new String[10];
+	static int[] shopItemDmg=new int[10];
+	static int[] shopItemValue=new int[10];
+	public static void shopItems(int clss){
+		switch(clss){
+		case(1) :{
+			genWeap(1);
 		}
-		}while(numResponse<1||numResponse>3);
-	}
-	public static void validShopChk(int newNumResponse){
-		numResponse=newNumResponse;
-		do{
-		if(numResponse<1||numResponse>4){
-		System.out.println(numResponse+" is not a valid answer.");
-		System.out.println("please try again.");
-		numResponse=scan.nextInt();
+		case(2) :{
+			genWeap(2);
 		}
-		}while(numResponse<1||numResponse>4);
-	}
-	public static void validBuyChk(int newNumResponse){
-		numResponse=newNumResponse;
-		do{
-		if(numResponse<1||numResponse>9){
-		System.out.println(numResponse+" is not a valid answer.");
-		System.out.println("please try again.");
-		numResponse=scan.nextInt();
+		case(3) :{
+			genWeap(3);
 		}
-		}while(numResponse<1||numResponse>9);
 	}
-	public static void validChk(String newResponse){
-		response=newResponse;
-		do{
-		if(!response.equals("yes")&&!response.equals("no")){
-			System.out.println(response+" is not a valid answer.");
-			System.out.println("Please try again");
-			response=scan.next();
+	}
+	public static void genWeap(int clss){
+		int roll=1;
+		if(roll<=2){
+			switch(clss){
+			case(1) :{	
+				Equipment sword1=new Equipment(mods[gen.nextInt(mods.length-1)], swords[gen.nextInt(swords.length-1)+1], null, gen.nextInt(10)+1, gen.nextInt(10)+1,1);
+				Weapon.setWeap(sword1);
+				break;
+			}
+			case(2) :{
+				Equipment bow1=new Equipment(mods[gen.nextInt(mods.length-1)+1],bows[gen.nextInt(bows.length-1)+1],null,gen.nextInt(10),gen.nextInt(10)+1,1);
+				Weapon.setWeap(bow1);
+				break;
+			}
+			case(3) :{
+				Equipment wand1=new Equipment(mods[gen.nextInt(mods.length-1)+1],bows[gen.nextInt(bows.length-1)+1],null,gen.nextInt(10),gen.nextInt(10)+1,1);
+				Weapon.setWeap(wand1);
+				break;
+			}
+			}
 		}
-		}while(!response.equals("yes")&&!response.equals("no"));
-	}
-	public static String getResponse(){
-		return response;
-	}
-	public static void setResponse(String newResponse){
-		response=newResponse;
-	}
-	public static int getNumResponse(){
-		return numResponse;
-	}
-	public static void setNumResponse(int newNum){
-		numResponse=newNum;
-	}
-	public static int getPClass(){
-		return pClass;
-	}
-	public static void setPClass(int newClass){
-		pClass=newClass;
-	}
-	public static int getRoll(){
-		roll=gen.nextInt();
-		return roll;
-	}
-	public static String getShield(){
-		return shield;
-	}
-	public static void setShield(String newMod, String newName, int newVal, int newDmg){
-		shieldMod=newMod;
-		shield=newName;
-		shieldVal=newVal;
-		defense+=newDmg;
-		shieldAmount=newDmg;
-	}
-	public static String getQuiver(){
-		return quiver;
-	}
-	public static void setQuiver(String newMod,String newName,int newVal,int newDmg){
-		quiver=newName;
-		quiverMod=newMod;
-		quiverVal=newVal;
-		quiverDmg=newDmg;
-	}
-	public static String getSpellBook(){
-		return spellBook;
-	}
-	public static void setSpellBook(String newMod, String newName,int newVal, int newDmg){
-		spellBook=newName;
-		spellBookMod=newMod;
-		spellBookVal=newVal;
-		spellBookDmg=newDmg;
-	}
-	public static int Attack(){
-		pAttack=gen.nextInt(dmg)+dmg/2;
-		return pAttack;
-	}
-	public static int getDmg(){
-		return pAttack;
-	}
-	public static void validFightChk(int newNumResponse){
-		numResponse=newNumResponse;
-		do{
-		if(numResponse<1||numResponse>4){
-		System.out.println(numResponse+" is not a valid answer.");
-		System.out.println("please try again.");
-		numResponse=scan.nextInt();
+		else if(roll>2 && roll<=5){
+			
 		}
-		}while(numResponse<1||numResponse>4);
+		else if(roll>5 && roll<=8){
+			
+		}
+		else{
+			
+		}
 	}
-	public static String getWeapName(){
-		return weapName;
+	public static void genSec(int clss){
+		switch(clss){
+		case(1) :{
+			Secondary shield1=new Secondary(mods[gen.nextInt(mods.length-1)+1],shields[gen.nextInt(shields.length-1)+1],null,gen.nextInt(10)+1,gen.nextInt(10)+1,2);
+			Secondary.setSecond(shield1);
+			break;
+		}
+		case(2) :{
+			Secondary quiver1=new Secondary(mods[gen.nextInt(mods.length-1)+1], quivers[gen.nextInt(quivers.length-1)+1],null, gen.nextInt(10)+1, gen.nextInt(10)+1,2);
+			Secondary.setSecond(quiver1);
+			break;
+		}
+		case(3) :{
+			Secondary spellBook1=new Secondary(mods[gen.nextInt(mods.length-1)+1],spellBooks[gen.nextInt(spellBooks.length-1)+1],null,gen.nextInt(10)+1,gen.nextInt(10)+1,2);
+			Secondary.setSecond(spellBook1);
+			break;
+		}
+		}
 	}
-	public static String getMod(){
-		return mod;
+	public static void genPotion(int clss){
+		switch(clss){
+		case(1) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10)+1, gen.nextInt(10)+1,3);
+			Potion.setPotion(potion1);
+			break;
+		}
+		case(2) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10)+1, gen.nextInt(10)+1,3);
+			Potion.setPotion(potion1);
+			break;
+		}
+		case(3) :{
+			Potion potion1=new Potion(null, null, null, potions[gen.nextInt(potions.length-1)+1], gen.nextInt(10)+1, gen.nextInt(10)+1,3);
+			Potion.setPotion(potion1);
+			break;
+		}
+		}
 	}
-	public static void setDmg(int newDmg){
-		dmg=newDmg;
+	public static void genArmor(int clss){
+		switch(clss){
+		case(1) :{	
+			Armor hArmor1=new Armor(mods[gen.nextInt(mods.length-1)], heavyArmor[gen.nextInt(heavyArmor.length-1)+1], null, gen.nextInt(10)+1, gen.nextInt(10)+1,4);
+			Armor.setArmor(hArmor1);
+			break;
+		}
+		case(2) :{
+			Armor mArmor1=new Armor(mods[gen.nextInt(mods.length-1)+1],mediumArmor[gen.nextInt(mediumArmor.length-1)+1],null,gen.nextInt(10),gen.nextInt(10)+1,4);
+			Armor.setArmor(mArmor1);
+			break;
+		}
+		case(3) :{
+			Armor lArmor1=new Armor(mods[gen.nextInt(mods.length-1)+1],lightArmor[gen.nextInt(lightArmor.length-1)+1],null,gen.nextInt(10),gen.nextInt(10)+1,4);
+			Armor.setArmor(lArmor1);
+			break;
+		}
+		}
 	}
-	public static int getBlock(){
-		return block;
+	public static void shopDisplay(int num){
+		System.out.println("Would you like to buy a weapon, secondary, armour, or potions?");
+		Player.validShopChk(scan.nextInt());
+		switch(Player.getNumResponse()){
+		case(1) :{
+			System.out.println("Heres what I've got: \n");
+			RPG.spacer();
+			System.out.println("\n");
+			for(int i=0;i<10;i++){
+				genWeap(num);
+				shopWeap[i]=Weapon.getWeap();
+			shopItemValue[i]=Weapon.getValue();
+			shopItemDmg[i]=Weapon.getDmg();
+			shopItemMods[i]=Weapon.getMod();
+			shopItemNames[i]=Weapon.getName();
+				System.out.println(i+". Weapon: "+shopItemMods[i]+" "+shopItemNames[i]+"\t  Value: "+shopItemValue[i]+"\t  Damage: "+shopItemDmg[i]);
+			}
+			System.out.print("\n");
+			RPG.spacer();
+			System.out.println("\n"+Player.getName()+"'s Balance: "+Player.getCoins()+" coins.\nWhich one do you want to buy?");
+			for(int i=0;i<shopItemValue.length;i++){
+			if(Player.getCoins()<shopItemValue[i]){
+				System.out.println("It appears you dont have enough coins to purchase anything, please leave.");
+				RPG.spacer();
+				System.out.println("\n");
+				World.getStory();
+			}
+			}
+			Player.validBuyChk(scan.nextInt());
+			balChk();
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			Player.subCoins(shopItemValue[Player.getNumResponse()]);
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
+			break;
+		}
+
+		case(2) :{
+			System.out.println("Heres what I've got: \n");
+			RPG.spacer();
+			System.out.println("\n");
+			for(int i=0;i<10;i++){
+				genSec(num);
+				shopWeap[i]=Secondary.getSecond();
+				shopItemValue[i]=Secondary.getVal();
+				shopItemDmg[i]=Secondary.getAmount();
+				shopItemMods[i]=Secondary.getMod();
+				shopItemNames[i]=Secondary.getSec();
+				System.out.println(i+". Secondary: "+shopItemMods[i]+" "+shopItemNames[i]+"\t  Value: "+shopItemValue[i]+"\t  Amount: "+shopItemDmg[i]);
+			}
+			System.out.println("\n");
+			RPG.spacer();
+			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			balChk();
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			Player.subCoins(shopItemValue[Player.getNumResponse()]);
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
+			break;
+		}
+		case(3) :{
+			System.out.println("Heres what I've got: \n");		
+ 			RPG.spacer();
+ 			System.out.println("\n");
+			for(int i=0;i<10;i++){
+				genArmor(num);
+				shopWeap[i]=Armor.getArmor();
+				shopItemValue[i]=Armor.getVal();
+				shopItemDmg[i]=Armor.getDef();
+				shopItemMods[i]=Armor.getMod();
+				shopItemNames[i]=Armor.getName();
+			System.out.println(i+". Armor: "+shopItemMods[i]+" "+shopItemNames[i]+" Value: "+shopItemValue[i]+" Amount: "+shopItemDmg[i]);
+			}
+			System.out.println("\n");
+			RPG.spacer();
+			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			balChk();
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv(shopItemMods[Player.getNumResponse()], shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			Player.subCoins(shopItemValue[Player.getNumResponse()]);
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
+			break;
+		}
+		case(4) :{
+			System.out.println("Heres what I've got: \n");
+			RPG.spacer();
+			System.out.println("\n");
+			for(int i=0;i<10;i++){
+			genPotion(num);
+			shopWeap[i]=Potion.getPotion();
+			shopItemValue[i]=Potion.getValue();
+			shopItemDmg[i]=Potion.getPotionAmount();
+			shopItemNames[i]=Potion.getPotionName();
+			System.out.println(i+". Potion: "+shopItemNames[i]+" Value: "+shopItemValue[i]+" Amount: "+shopItemDmg[i]);
+			}
+			System.out.println("\n");
+			RPG.spacer();
+			System.out.println("\nWhich one do you want to buy?");
+			Player.validBuyChk(scan.nextInt());
+			balChk();
+			playerInventory.addPInv(shopWeap[Player.getNumResponse()]);
+			playerInventory.addUIInv("", shopItemNames[Player.getNumResponse()]);
+			playerInventory.getInv();
+			Player.subCoins(shopItemValue[Player.getNumResponse()]);
+			RPG.spacer();
+			System.out.println("\nItem Bought: "+shopItemMods[Player.getNumResponse()]+" "+shopItemNames[Player.getNumResponse()]);
+			System.out.println("Do you wish to buy something else?");
+			break;
+		}
+		}		
+		RPG.spacer();
+		System.out.println("\n");
 	}
-	public static int Block(){
-		block=gen.nextInt(10)+1;
-		return block;
+	public static void defaultWeap(int clss){
+		switch(clss){
+		case(1) :{
+			Player.setWeap(mods[0],swords[0],5,10);
+			break;
+		}
+		case(2) :{
+			Player.setWeap(mods[0],bows[0],5,10);
+			break;
+		}
+		case(3) :{
+			Player.setWeap(mods[0],wands[0],5,10);
+			break;
+		}
+		}	
 	}
-	public static int getAmmo(){
-		return ammo;
+	public static void defaultDef(int clss){
+		switch(clss){
+		case(1) :{
+			Player.setShield(mods[0],shields[0],5,10);
+		}
+		case(2) :{
+			Player.setQuiver(mods[0],quivers[0],5,10);
+		}
+		case(3) :{
+			Player.setSpellBook(mods[0],spellBooks[0],5,10);
+		}
+		}
 	}
-	public static void setAmmo(int newAmmo){
-		ammo=newAmmo;
+	public static String getModName(int modNum){
+		String result=mods[modNum];
+		return result;
 	}
-	public static void addAmmo(int newAmmo){
-		ammo+=newAmmo;
+	public static void balChk(){
+		do{
+		if(Player.getCoins()<shopItemValue[Player.getNumResponse()]){
+			System.out.println("That "+shopItemNames[Player.getNumResponse()]+" costs "+shopItemValue[Player.getNumResponse()]+" coins.");
+			System.out.println("You only have "+Player.getCoins()+" coins.\nPlease choose another item or type \"10\" to exit.");
+			Player.validBuyChk(scan.nextInt());
+		}
+		}while(Player.getCoins()<shopItemValue[Player.getNumResponse()]);
 	}
-	public static void subAmmo(int newAmmo){
-		ammo-=newAmmo;
-	}
-	public static int getDeath(){
-		return gen.nextInt(10);
-	}
-	public static void setInShop(boolean newShop){
-	inShop=newShop;
-	}
-	public static boolean getInShop(){
-		return inShop;
-	}
-	public static void setInFight(boolean newFight){
-	 inFight=newFight;
-	}
-	public static boolean getInFight(){
-		return inFight;
-	}
-	public static int getFTime(){
-		return fTime;
-	}
-	public static boolean getStart(){
-		return start;
-	}
-	public static void setStart(boolean newStart){
-		start=newStart;
-	}
+	
 }
