@@ -7,8 +7,9 @@ public class Player
 	static Scanner scan=new Scanner(System.in);
 	static Random gen=new Random();
 	public static String name,response,result,death,shield,quiver,spellBook,mod,weapName,shieldMod,quiverMod,spellBookMod;
-    public static int health=100,defense=0,coins=0,weapVal,shieldVal,dmg,block=0,shieldAmount=0,quiverVal,quiverDmg,spellBookDmg,spellBookVal;
+    public static int health=100,defense=0,coins=0,weapVal,shieldVal,dmg,block=0,shieldAmount=0,quiverVal,quiverDmg,spellBookDmg,spellBookVal,fTime=0;
 	public Equipment[] secondary,inv;
+	static boolean inShop=false,inFight=false,start=false;
 	public static Equipment invSize[]=new Equipment[30];
 	static String weapon;
 	public Player(String newName, int newClass){
@@ -74,12 +75,12 @@ public class Player
 	public static void validBuyChk(int newNumResponse){
 		numResponse=newNumResponse;
 		do{
-		if(numResponse<0||numResponse>9){
+		if(numResponse<1||numResponse>9){
 		System.out.println(numResponse+" is not a valid answer.");
 		System.out.println("please try again.");
 		numResponse=scan.nextInt();
 		}
-		}while(numResponse<0||numResponse>9);
+		}while(numResponse<1||numResponse>9);
 	}
 	public static void validChk(String newResponse){
 		response=newResponse;
@@ -186,7 +187,28 @@ public class Player
 	public static void subAmmo(int newAmmo){
 		ammo-=newAmmo;
 	}
-	public static int getLostCoins(){
-		return gen.nextInt(10)+1;
+	public static int getDeath(){
+		return gen.nextInt(10);
+	}
+	public static void setInShop(boolean newShop){
+	inShop=newShop;
+	}
+	public static boolean getInShop(){
+		return inShop;
+	}
+	public static void setInFight(boolean newFight){
+	 inFight=newFight;
+	}
+	public static boolean getInFight(){
+		return inFight;
+	}
+	public static int getFTime(){
+		return fTime;
+	}
+	public static boolean getStart(){
+		return start;
+	}
+	public static void setStart(boolean newStart){
+		start=newStart;
 	}
 }
