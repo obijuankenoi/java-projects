@@ -8,9 +8,6 @@ public class playerInventory {
 	static String uiInv[]=new String [maxItems];
 	static Equipment pInv[]=new Equipment[uiInv.length];
 	static Potion pBag[]=new Potion[maxItems];
-	public static int getSize(){
-		return uiInv.length;
-	}
 	public static int getInvSize(){
 		for(int row=0;row<uiInv.length;row++)
 		total=maxItems;
@@ -74,13 +71,5 @@ public class playerInventory {
 		for(Potion word: pBag){
 			System.out.println(word);
 		}
-	}
-	public static String getSingleUiItem(int num){
-		String item;
-		item=uiInv[num];
-		return item;
-	}
-	public static void getSinglePItem(int num){
-		pInv[num]=null;
 	}
 }
