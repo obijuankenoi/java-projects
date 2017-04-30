@@ -1,16 +1,17 @@
 package Gamemode;
 import java.util.Scanner;
 import java.util.Random;
-public class RPG{
-	//private Display display;
+public class RPG {
 	static Random gen=new Random();
 	static Scanner scan=new Scanner(System.in);
 	static String rad="Radulfus: ", geo="Geofridus";
-	static String[] space=new String[20];
+	static String[] space=new String[20];	
 	public static void main(String[] args){
 		/* BrainStrom:
 		 * if no spell book, wand is a melee weapon
+		 * figure out the welcome back text for shop
 		 * create a range for each modifier
+		 * add items to player inventory and shop*
 		 * add rewards for killing enemies
 		 * add coin loss for death
 		 * switch statement to set chances of weapons
@@ -21,9 +22,8 @@ public class RPG{
 		 * add wizards can heal
 		 * spellbooks increase dmg and heal
 		 * every world adds health
+		 * type no after buying does not work
 		 */
-		int fTime=0;
-		boolean inShop=false;
 		playerInventory.clearInv();
 		World.genWorld();
 		println("Please keep in mind that all decisions in this game are made with numbers.\nUsually 1 & 2. i.e: 1 is the first choice, 2 is the second.\n\n\n");	
@@ -156,101 +156,33 @@ public class RPG{
 				println("\n**From here only use numbers to navigate the menu.**");
 				spacer();
 			println("\n");
-			println("\nDo you want to go into the wild or visit the shop?");
-			Player.validNumChk(scan.nextInt());
 			do{
+				println("\nDo you want to go into the wild or visit the shop?");
+				Player.validNumChk(scan.nextInt());
 				if(Player.getNumResponse()==1){
-					println("You go into the "+getWorldInfo()+"\n");
-					Enemies.encounter();
-					do{
-					println("\n\n"+Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
-					println("Do you Attack, Defend, Open your inventory or Flee?");
-					Player.validFightChk(scan.nextInt());
-					fightScene(Player.getNumResponse());
-					if(Player.getHealth()<1){
-						println("\n"+Player.getName()+" died.");
-						println("\n"+Player.getName()+" lost: "+Player.getLostCoins());
-						spacer();
-						println("\n");
-						Player.subCoins(Player.getLo);
-						break;
+					World.getFullFight();		
+					Player.setStart(true);
 					}
-					else if(Enemies.getHealth()<1){
-						println(Enemies.getName()+" died.");
-						spacer();
-						println("\n"+Player.getName()+"'s loot: "+Enemies.genECoinDrop()+" Coins!");
-						spacer();
-						Player.addCoins(Enemies.getCoinDrop());
-						print("\n");
-						Enemies.setHealth(100);
-						World.addFloorNum(1);
-						World.updateWorld(World.getFloorNum());
-						break;
-					}
-					}while(Enemies.getHealth()>0||Player.getHealth()>0);
-				}
 				else if(Player.getNumResponse()==2){
-					if(fTime==0){
+					if(Player.getFTime()==0){
+						Player.setInShop(true);
 						println("I see this is your first time at my shop.\nThe names "+geo+".");
-						fTime++;
-					}
-					else if(fTime>0)
-						println("Welcome back "+Player.getName()+"!");
-						inShop=true;
-						do{
 							println("What can I do ya for?\nBuying=1, Selling=2");
 							Player.setNumResponse(scan.nextInt());
 							Player.validNumChk(Player.getNumResponse());
 							 if(Player.getNumResponse()==1){		
 								 do{
 									 Shop.shopDisplay(Player.getPClass());
-									 Player.validChk(scan.next());		
-								 }while(Player.getResponse().equals("yes"));
-								 if(Player.getResponse().equals("no")){
-									 inShop=false;
-									 break;
-								 }
+									 Player.validChk(scan.next());
+								 }while(Player.getResponse().equals("yes"));		 
 							 }
 							 else if(Player.getNumResponse()==2){
-								Shop.shopSellDisplay();
-								if(Player.getResponse().equals("no")){
-									inShop=false;
-									break;
-								}
-								 } 
-						}while(inShop=true);
-						if(inShop==false){
-							println("You go into the "+getWorldInfo()+"\n");
-							Enemies.encounter();
-							do{
-							println("\n\n"+Player.getName()+"'s Health: "+Player.getHealth()+"\n"+Enemies.getName()+"'s health: "+Enemies.getHealth());
-							println("Do you Attack, Defend, Open your inventory or Flee?");
-							Player.validFightChk(scan.nextInt());
-							fightScene(Player.getNumResponse());
-							if(Player.getHealth()<1){
-								println("\n"+Player.getName()+" died.");
-								spacer();
-								println("\n");
-								break;
-							}
-							else if(Enemies.getHealth()<1){
-								println(Enemies.getName()+" died.");
-								spacer();
-								println("\n"+Player.getName()+"'s loot: "+Enemies.genECoinDrop()+" Coins!");
-								spacer();
-								Player.addCoins(Enemies.getCoinDrop());
-								print("\n");
-								Enemies.setHealth(100);
-								World.addFloorNum(1);
-								World.updateWorld(World.getFloorNum());
-								break;
-							}
-							}while(Enemies.getHealth()>0||Player.getHealth()>0);
-						 }
+								 println("Lets see what you've got");		
+							 }
+						Player.setStart(true);
+					}				
 				}
-				println("\nDo you want to go into the wild or visit the shop?");
-				Player.validNumChk(scan.nextInt());
-			}while(Player.getNumResponse()==1||Player.getNumResponse()==2);
+			}while(Player.getStart()==true);
 		}
 	public static void println(String output){
 		System.out.println(output);
@@ -258,86 +190,12 @@ public class RPG{
 	public static void print(String output){
 		System.out.print(output);
 	}
-	public static void fightScene(int input){
-		switch(input){
-		case(1) :{
-			Enemies.subHealth(Player.Attack());
-			Player.subHealth(Enemies.Attack());
-			if(Player.getHealth()>0&&Player.getDmg()>0){	
-			spacer();
-			println("\nYou deal: "+Player.getDmg()+" Damage!\n");
-			}
-			else if(Player.getDmg()==0){
-				spacer();
-				println("You Missed!\n");
-			}
-			if(Enemies.getHealth()>0&&Enemies.getDmg()>0){
-				if(Player.getHealth()<=0){
-					spacer();
-					print("\n");
-				}
-			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
-			if(Player.getHealth()>0)
-			spacer();
-			}
-			else if(Enemies.getDmg()==0){
-				println(Enemies.getName()+" Missed!\n");
-			    spacer();
-			}
-			break;
-		}
-		case(2) :{
-			Player.subHealth(Enemies.Attack());
-			Player.Block();
-			if(Enemies.getHealth()>1&&Player.getHealth()>1&&Enemies.getDmg()>Player.getBlock()){
-			Player.addHealth(Player.getBlock());
-			spacer();
-			println("\n"+Player.getName()+" blocked: "+Player.getBlock()+" Damage!");
-			println(Enemies.getName()+" deals: "+Enemies.getDmg()+" Damage!");
-			spacer();
-			}
-			else if(Player.getBlock()>Enemies.getDmg()){
-				Player.addHealth(Enemies.getDmg());
-				spacer();
-				println("\nYou cancelled the attack!");
-				spacer();
-			}
-			else if(Player.getBlock()==Enemies.getDmg()){
-				Player.addHealth(Enemies.getDmg());
-				spacer();
-				println("\nBoth attacks were cancelled!");
-				spacer();
-			}
-			break;
-		}
-		case(3) :{
-			println("You open your bag!\n");
-			Player.addHealth(100);
-			break;
-		}
-		case(4) :{
-			println("You attempt to flee!\n");
-			if(Player.getRoll()>Enemies.getRoll()){
-				spacer();
-				println("You successfully escaped!");
-				spacer();
-				break;
-			}
-			else{
-				println("You failed to escape!");
-				Player.subHealth(Enemies.Attack());
-			}
-			break;
-		}
-		}
-	}
+	
 	public static void spacer(){
 		for(int i=0;i<20;i++){
 			space[i]="-";
 		print(space[i]);
 		}
 	}
-	public static String getWorldInfo(){
-		return World.getWorld()+".\nWorld: "+World.getWorldLevel()+" Level: "+World.getFloorNum();
-	}	
+	
 }
